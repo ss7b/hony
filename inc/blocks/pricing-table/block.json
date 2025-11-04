@@ -1,0 +1,33 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "modern-fse/pricing-table",
+    "version": "1.0.0",
+    "title": "Pricing Table",
+    "category": "design",
+    "description": "بلوك لعرض جدول الأسعار والخطط",
+    "textdomain": "modern-fse-theme",
+    "attributes": {
+        "plans": {
+            "type": "array",
+            "default": []
+        },
+        "columns": {
+            "type": "number",
+            "default": 3
+        },
+        "highlightedPlan": {
+            "type": "number",
+            "default": -1
+        }
+    },
+    "supports": {
+        "html": false,
+        "align": true,
+        "spacing": true,
+        "color": true,
+        "typography": true
+    },
+    "editorScript": "file:./editor.js",
+    "style": "file:./style.css"
+}

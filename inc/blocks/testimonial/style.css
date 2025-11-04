@@ -1,0 +1,121 @@
+/* Testimonial Block Styles */
+.testimonial-block {
+    background: var(--wp--preset--color--white);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: var(--wp--preset--shadow--medium);
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
+}
+
+.testimonial-block:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--wp--preset--shadow--large);
+}
+
+.testimonial-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+.testimonial-avatar-section {
+    flex-shrink: 0;
+}
+
+.testimonial-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--wp--preset--color--primary-100);
+}
+
+.testimonial-content-section {
+    flex: 1;
+}
+
+.testimonial-content {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--wp--preset--color--secondary-700);
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+.testimonial-rating {
+    margin-bottom: 1rem;
+}
+
+.testimonial-rating .star {
+    color: var(--wp--preset--color--warning-500);
+    font-size: 1.25rem;
+}
+
+.testimonial-rating .star.empty {
+    color: var(--wp--preset--color--secondary-200);
+}
+
+.testimonial-author-info {
+    border-top: 1px solid var(--wp--preset--color--secondary-100);
+    padding-top: 1rem;
+}
+
+.testimonial-author {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--wp--preset--color--secondary-900);
+    margin: 0 0 0.25rem 0;
+}
+
+.testimonial-position {
+    font-size: 0.875rem;
+    color: var(--wp--preset--color--secondary-500);
+    margin: 0;
+}
+
+/* RTL Support */
+[dir="rtl"] .testimonial-inner {
+    flex-direction: row-reverse;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .testimonial-inner {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .testimonial-avatar {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .testimonial-content {
+        font-size: 1rem;
+    }
+}
+
+/* Editor Styles */
+.wp-block-modern-fse-testimonial .testimonial-block {
+    border: 2px dashed var(--wp--preset--color--secondary-200);
+}
+
+.wp-block-modern-fse-testimonial .testimonial-avatar-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.wp-block-modern-fse-testimonial .remove-image-button {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: var(--wp--preset--color--error-500);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+    cursor: pointer;
+}

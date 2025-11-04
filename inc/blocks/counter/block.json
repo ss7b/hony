@@ -1,0 +1,47 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "modern-fse/counter",
+    "version": "1.0.0",
+    "title": "Counter",
+    "category": "design",
+    "description": "بلوك لعرض عداد أرقام متحرك",
+    "textdomain": "modern-fse-theme",
+    "attributes": {
+        "number": {
+            "type": "number",
+            "default": 100
+        },
+        "title": {
+            "type": "string",
+            "source": "html",
+            "selector": ".counter-title"
+        },
+        "duration": {
+            "type": "number",
+            "default": 2000
+        },
+        "prefix": {
+            "type": "string",
+            "default": ""
+        },
+        "suffix": {
+            "type": "string",
+            "default": "+"
+        },
+        "icon": {
+            "type": "string",
+            "default": "📊"
+        }
+    },
+    "supports": {
+        "html": false,
+        "align": true,
+        "spacing": true,
+        "color": true,
+        "typography": true
+    },
+    "editorScript": "file:./editor.js",
+    "script": "file:./view.js",
+    "style": "file:./style.css"
+}

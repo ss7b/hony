@@ -173,3 +173,52 @@ function modern_fse_theme_woocommerce_support() {
 	add_theme_support( 'wc-product-gallery-slider' );
 }
 add_action( 'after_setup_theme', 'modern_fse_theme_woocommerce_support' );
+
+require_once get_template_directory() . '/inc/patterns/init.php';
+
+
+function modern_fse_optimize_performance() {
+    // إزالة CSS غير الضروري
+    if ( ! is_admin() ) {
+        wp_dequeue_style( 'wp-block-library' );
+        wp_dequeue_style( 'wp-block-library-theme' );
+        wp_dequeue_style( 'wc-blocks-style' );
+    }
+    
+    // إضافة lazy loading للصور
+    add_filter( 'wp_lazy_loading_enabled', '__return_true' );
+}
+add_action( 'wp_enqueue_scripts', 'modern_fse_optimize_performance', 100 );
+
+/**
+ * تحميل الملفات الأساسية
+ */
+function modern_fse_include_files() {
+    
+    // قائمة الملفات المطلوبة
+    $includes = array(
+        '/inc/blocks/init.php',      // نظام البلوكات المخصصة
+        '/inc/patterns/hero.php',    // أنماط البطل
+        '/inc/patterns/header.php',  // أنماط الهيدر
+        '/inc/patterns/features.php', // أنماط الميزات
+        '/inc/patterns/testimonials.php', // أنماط آراء العملاء
+        '/inc/patterns/team.php',    // أنماط الفريق
+        '/inc/patterns/pricing.php', // أنماط الأسعار
+        '/inc/patterns/contact.php', // أنماط الاتصال
+        '/inc/patterns/cta.php',     // أنماط الدعوة للإجراء
+        '/inc/patterns/footer.php',  // أنماط الفوتر
+    );
+    
+    foreach ( $includes as $file ) {
+        $file_path = MODERN_FSE_THEME_PATH . $file;
+        if ( file_exists( $file_path ) ) {
+            require_once $file_path;
+        } else {
+            // تسجيل خطأ في سجلات التصحيح (للتطوير فقط)
+            if ( WP_DEBUG ) {
+                error_log( 'ملف غير موجود: ' . $file_path );
+            }
+        }
+    }
+}
+add_action( 'after_setup_theme', 'modern_fse_include_files' );

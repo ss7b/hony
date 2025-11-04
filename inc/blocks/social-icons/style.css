@@ -1,0 +1,163 @@
+/* Social Icons Block Styles */
+.social-icons-block {
+    margin: 2rem 0;
+}
+
+.social-icons-inner {
+    display: flex;
+    justify-content: var(--social-alignment, center);
+}
+
+.social-icons-list {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+/* Alignment */
+.alignment-left .social-icons-inner {
+    justify-content: flex-start;
+}
+
+.alignment-center .social-icons-inner {
+    justify-content: center;
+}
+
+.alignment-right .social-icons-inner {
+    justify-content: flex-end;
+}
+
+/* Sizes */
+.size-small .social-icon-link {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+}
+
+.size-medium .social-icon-link {
+    width: 50px;
+    height: 50px;
+    font-size: 1.25rem;
+}
+
+.size-large .social-icon-link {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+}
+
+/* Styles */
+.style-default .social-icon-link {
+    background: var(--wp--preset--color--secondary-100);
+    color: var(--wp--preset--color--secondary-700);
+}
+
+.style-circle .social-icon-link {
+    border-radius: 50%;
+    background: var(--wp--preset--color--primary-500);
+    color: white;
+}
+
+.style-square .social-icon-link {
+    border-radius: 8px;
+    background: var(--wp--preset--color--secondary-800);
+    color: white;
+}
+
+/* Social Icon Link */
+.social-icon-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.social-icon-link:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--wp--preset--shadow--medium);
+}
+
+/* Platform-specific colors on hover */
+.social-icon-link:hover[href*="facebook"] {
+    background: #1877F2 !important;
+    color: white !important;
+}
+
+.social-icon-link:hover[href*="twitter"] {
+    background: #1DA1F2 !important;
+    color: white !important;
+}
+
+.social-icon-link:hover[href*="instagram"] {
+    background: #E4405F !important;
+    color: white !important;
+}
+
+.social-icon-link:hover[href*="linkedin"] {
+    background: #0A66C2 !important;
+    color: white !important;
+}
+
+.social-icon-link:hover[href*="youtube"] {
+    background: #FF0000 !important;
+    color: white !important;
+}
+
+.social-icon-link:hover[href*="whatsapp"] {
+    background: #25D366 !important;
+    color: white !important;
+}
+
+/* Editor Styles */
+.wp-block-modern-fse-social-icons .social-icons-empty {
+    text-align: center;
+    padding: 2rem;
+    background: var(--wp--preset--color--secondary-50);
+    border-radius: 8px;
+    border: 2px dashed var(--wp--preset--color--secondary-200);
+}
+
+.wp-block-modern-fse-social-icons .social-icon-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--wp--preset--color--secondary-50);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.wp-block-modern-fse-social-icons .social-icon-preview {
+    flex-shrink: 0;
+}
+
+.wp-block-modern-fse-social-icons .social-icon-controls {
+    flex: 1;
+}
+
+.wp-block-modern-fse-social-icons .social-icon-controls .components-base-control {
+    margin-bottom: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .social-icons-list {
+        justify-content: center;
+    }
+    
+    .alignment-left .social-icons-inner,
+    .alignment-right .social-icons-inner {
+        justify-content: center;
+    }
+}
+
+/* RTL Support */
+[dir="rtl"] .alignment-left .social-icons-inner {
+    justify-content: flex-end;
+}
+
+[dir="rtl"] .alignment-right .social-icons-inner {
+    justify-content: flex-start;
+}

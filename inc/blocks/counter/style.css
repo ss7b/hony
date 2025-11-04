@@ -1,0 +1,76 @@
+/* Counter Block Styles */
+.counter-block {
+    text-align: center;
+    padding: 2rem;
+    background: var(--wp--preset--color--white);
+    border-radius: 12px;
+    box-shadow: var(--wp--preset--shadow--medium);
+    transition: all 0.3s ease;
+}
+
+.counter-block:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--wp--preset--shadow--large);
+}
+
+.counter-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.counter-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.counter-number {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--wp--preset--color--primary-600);
+    line-height: 1;
+}
+
+.counter-prefix,
+.counter-suffix {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--wp--preset--color--secondary-500);
+}
+
+.counter-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--wp--preset--color--secondary-700);
+    margin: 0;
+}
+
+/* Editor Preview */
+.wp-block-modern-fse-counter .counter-number-preview {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--wp--preset--color--primary-600);
+}
+
+.wp-block-modern-fse-counter .counter-prefix,
+.wp-block-modern-fse-counter .counter-suffix {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--wp--preset--color--secondary-500);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .counter-block {
+        padding: 1.5rem;
+    }
+    
+    .counter-number {
+        font-size: 2.5rem;
+    }
+    
+    .counter-icon {
+        font-size: 2rem;
+    }
+}

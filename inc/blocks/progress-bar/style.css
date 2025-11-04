@@ -1,0 +1,82 @@
+/* Progress Bar Block Styles */
+.progress-bar-block {
+    margin: 1.5rem 0;
+}
+
+.progress-bar-inner {
+    background: var(--wp--preset--color--white);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--wp--preset--shadow--medium);
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.progress-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--wp--preset--color--secondary-800);
+    margin: 0;
+}
+
+.progress-percentage {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--wp--preset--color--primary-600);
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 8px;
+    background: var(--wp--preset--color--secondary-200);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, 
+        var(--wp--preset--color--primary-500), 
+        var(--wp--preset--color--primary-600));
+    border-radius: 4px;
+    width: 0%;
+    transition: width 1.5s ease-in-out;
+}
+
+/* Animation for filled state */
+.progress-bar-fill.animated {
+    animation: fillProgress 1.5s ease-in-out forwards;
+}
+
+@keyframes fillProgress {
+    from { width: 0%; }
+    to { width: attr(data-width); }
+}
+
+/* Editor Styles */
+.wp-block-modern-fse-progress-bar .progress-bar-fill {
+    transition: none !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .progress-bar-inner {
+        padding: 1rem;
+    }
+    
+    .progress-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
+/* RTL Support */
+[dir="rtl"] .progress-bar-fill {
+    transform-origin: right;
+}

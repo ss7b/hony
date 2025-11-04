@@ -1,0 +1,182 @@
+/* Pricing Table Block Styles */
+.pricing-table-block {
+    margin: 2rem 0;
+}
+
+.pricing-table-inner {
+    display: grid;
+    gap: 2rem;
+}
+
+.pricing-columns-1 {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.pricing-columns-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.pricing-columns-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.pricing-columns-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.pricing-plan {
+    background: var(--wp--preset--color--white);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: var(--wp--preset--shadow--medium);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    position: relative;
+    text-align: center;
+}
+
+.pricing-plan:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--wp--preset--shadow--large);
+}
+
+.pricing-plan.highlighted,
+.pricing-plan.popular {
+    border-color: var(--wp--preset--color--primary-500);
+    transform: scale(1.05);
+}
+
+.popular-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--wp--preset--color--primary-500);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.plan-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--wp--preset--color--secondary-900);
+    margin: 0 0 1rem 0;
+}
+
+.plan-price {
+    margin: 1.5rem 0;
+}
+
+.price-amount {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--wp--preset--color--primary-600);
+}
+
+.price-period {
+    font-size: 1rem;
+    color: var(--wp--preset--color--secondary-500);
+    font-weight: 500;
+}
+
+.plan-features {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+    text-align: right;
+}
+
+.plan-features li {
+    padding: 0.5rem 0;
+    color: var(--wp--preset--color--secondary-700);
+    border-bottom: 1px solid var(--wp--preset--color--secondary-100);
+}
+
+.plan-features li:last-child {
+    border-bottom: none;
+}
+
+.plan-button {
+    margin-top: 2rem;
+}
+
+.plan-button .button {
+    display: block;
+    width: 100%;
+    padding: 1rem 2rem;
+    background: var(--wp--preset--color--primary-500);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.plan-button .button:hover {
+    background: var(--wp--preset--color--primary-600);
+    transform: translateY(-2px);
+}
+
+.pricing-plan.highlighted .plan-button .button,
+.pricing-plan.popular .plan-button .button {
+    background: var(--wp--preset--color--primary-600);
+}
+
+/* Editor Styles */
+.wp-block-modern-fse-pricing-table .pricing-table-empty {
+    text-align: center;
+    padding: 3rem;
+    background: var(--wp--preset--color--secondary-50);
+    border-radius: 8px;
+    border: 2px dashed var(--wp--preset--color--secondary-200);
+}
+
+.wp-block-modern-fse-pricing-table .feature-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.wp-block-modern-fse-pricing-table .feature-row .components-text-control {
+    flex: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .pricing-columns-3,
+    .pricing-columns-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .pricing-columns-2,
+    .pricing-columns-3,
+    .pricing-columns-4 {
+        grid-template-columns: 1fr;
+    }
+    
+    .pricing-plan.highlighted,
+    .pricing-plan.popular {
+        transform: none;
+    }
+}
+
+/* RTL Support */
+[dir="rtl"] .plan-features {
+    text-align: left;
+}
+
+[dir="rtl"] .popular-badge {
+    left: auto;
+    right: 50%;
+    transform: translateX(50%);
+}

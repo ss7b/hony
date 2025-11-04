@@ -1,0 +1,53 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "modern-fse/testimonial",
+    "version": "1.0.0",
+    "title": "Testimonial",
+    "category": "design",
+    "description": "بلوك لعرض آراء وتقييمات العملاء",
+    "textdomain": "modern-fse-theme",
+    "attributes": {
+        "content": {
+            "type": "string",
+            "source": "html",
+            "selector": ".testimonial-content"
+        },
+        "author": {
+            "type": "string",
+            "source": "html",
+            "selector": ".testimonial-author"
+        },
+        "position": {
+            "type": "string",
+            "source": "html",
+            "selector": ".testimonial-position"
+        },
+        "avatarUrl": {
+            "type": "string",
+            "source": "attribute",
+            "selector": ".testimonial-avatar",
+            "attribute": "src"
+        },
+        "avatarAlt": {
+            "type": "string",
+            "source": "attribute",
+            "selector": ".testimonial-avatar",
+            "attribute": "alt"
+        },
+        "rating": {
+            "type": "number",
+            "default": 5
+        }
+    },
+    "supports": {
+        "html": false,
+        "align": true,
+        "spacing": true,
+        "color": true,
+        "typography": true
+    },
+    "editorScript": "file:./editor.js",
+    "script": "file:./view.js",
+    "style": "file:./style.css"
+}

@@ -1,0 +1,52 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "modern-fse/team-member",
+    "version": "1.0.0",
+    "title": "Team Member",
+    "category": "design",
+    "description": "بلوك لعرض معلومات عضو الفريق",
+    "textdomain": "modern-fse-theme",
+    "attributes": {
+        "name": {
+            "type": "string",
+            "source": "html",
+            "selector": ".team-member-name"
+        },
+        "position": {
+            "type": "string",
+            "source": "html",
+            "selector": ".team-member-position"
+        },
+        "bio": {
+            "type": "string",
+            "source": "html",
+            "selector": ".team-member-bio"
+        },
+        "avatarUrl": {
+            "type": "string",
+            "source": "attribute",
+            "selector": ".team-member-avatar",
+            "attribute": "src"
+        },
+        "avatarAlt": {
+            "type": "string",
+            "source": "attribute",
+            "selector": ".team-member-avatar",
+            "attribute": "alt"
+        },
+        "socialLinks": {
+            "type": "array",
+            "default": []
+        }
+    },
+    "supports": {
+        "html": false,
+        "align": true,
+        "spacing": true,
+        "color": true,
+        "typography": true
+    },
+    "editorScript": "file:./editor.js",
+    "style": "file:./style.css"
+}

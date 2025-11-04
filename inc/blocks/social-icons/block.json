@@ -1,0 +1,37 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "modern-fse/social-icons",
+    "version": "1.0.0",
+    "title": "Social Icons",
+    "category": "design",
+    "description": "بلوك لعرض أيقونات التواصل الاجتماعي",
+    "textdomain": "modern-fse-theme",
+    "attributes": {
+        "icons": {
+            "type": "array",
+            "default": []
+        },
+        "alignment": {
+            "type": "string",
+            "default": "center"
+        },
+        "size": {
+            "type": "string",
+            "default": "medium"
+        },
+        "style": {
+            "type": "string",
+            "default": "default"
+        }
+    },
+    "supports": {
+        "html": false,
+        "align": true,
+        "spacing": true,
+        "color": true,
+        "typography": true
+    },
+    "editorScript": "file:./editor.js",
+    "style": "file:./style.css"
+}

@@ -1,0 +1,39 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "modern-fse/progress-bar",
+    "version": "1.0.0",
+    "title": "Progress Bar",
+    "category": "design",
+    "description": "بلوك لعرض شريط تقدم متحرك",
+    "textdomain": "modern-fse-theme",
+    "attributes": {
+        "percentage": {
+            "type": "number",
+            "default": 75
+        },
+        "title": {
+            "type": "string",
+            "source": "html",
+            "selector": ".progress-title"
+        },
+        "showPercentage": {
+            "type": "boolean",
+            "default": true
+        },
+        "animationDuration": {
+            "type": "number",
+            "default": 1500
+        }
+    },
+    "supports": {
+        "html": false,
+        "align": true,
+        "spacing": true,
+        "color": true,
+        "typography": true
+    },
+    "editorScript": "file:./editor.js",
+    "script": "file:./view.js",
+    "style": "file:./style.css"
+}
