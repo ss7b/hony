@@ -1,0 +1,11 @@
+{
+    "apiVersion": 2,
+    "name": "modern-fse/testimonial",
+    "title": "Testimonial",
+    "category": "design",
+    "icon": "format-quote",
+    "supports": {
+        "html": false,
+        "align": true
+    }
+}

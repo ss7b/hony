@@ -1,0 +1,23 @@
+/* أنماط المحرر */
+.wp-block {
+	max-width: 1200px;
+}
+
+.wp-block[data-align="wide"] {
+	max-width: 1400px;
+}
+
+.wp-block[data-align="full"] {
+	max-width: none;
+}
+
+/* تحسينات للعربية */
+.rtl {
+	text-align: right;
+	direction: rtl;
+}
+
+.rtl .wp-block-navigation .wp-block-navigation-item {
+	margin-right: 0;
+	margin-left: 20px;
+}

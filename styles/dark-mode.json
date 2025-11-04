@@ -1,0 +1,113 @@
+{
+    "version": 2,
+    "title": "Dark Mode",
+    "settings": {
+        "color": {
+            "palette": [
+                {
+                    "slug": "primary",
+                    "color": "#3b82f6",
+                    "name": "Primary"
+                },
+                {
+                    "slug": "secondary", 
+                    "color": "#94a3b8",
+                    "name": "Secondary"
+                },
+                {
+                    "slug": "accent",
+                    "color": "#fbbf24",
+                    "name": "Accent"
+                },
+                {
+                    "slug": "background",
+                    "color": "#0f172a",
+                    "name": "Background"
+                },
+                {
+                    "slug": "surface",
+                    "color": "#1e293b",
+                    "name": "Surface"
+                },
+                {
+                    "slug": "text-primary",
+                    "color": "#f1f5f9",
+                    "name": "Text Primary"
+                },
+                {
+                    "slug": "text-secondary",
+                    "color": "#cbd5e1",
+                    "name": "Text Secondary"
+                }
+            ],
+            "gradients": [
+                {
+                    "slug": "dark-gradient",
+                    "gradient": "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)",
+                    "name": "Dark Gradient"
+                },
+                {
+                    "slug": "primary-dark-gradient",
+                    "gradient": "linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%)",
+                    "name": "Primary Dark Gradient"
+                }
+            ]
+        }
+    },
+    "styles": {
+        "color": {
+            "background": "#0f172a",
+            "text": "#f1f5f9"
+        },
+        "blocks": {
+            "core/group": {
+                "color": {
+                    "background": "#1e293b"
+                }
+            },
+            "core/heading": {
+                "color": {
+                    "text": "#f1f5f9"
+                }
+            },
+            "core/paragraph": {
+                "color": {
+                    "text": "#cbd5e1"
+                }
+            },
+            "core/button": {
+                "color": {
+                    "background": "#3b82f6",
+                    "text": "#ffffff"
+                },
+                ":hover": {
+                    "color": {
+                        "background": "#2563eb"
+                    }
+                }
+            },
+            "core/navigation": {
+                "color": {
+                    "background": "transparent",
+                    "text": "#f1f5f9"
+                }
+            },
+            "core/separator": {
+                "color": {
+                    "background": "#334155"
+                }
+            },
+            "core/list": {
+                "color": {
+                    "text": "#cbd5e1"
+                }
+            },
+            "core/quote": {
+                "color": {
+                    "background": "#1e293b",
+                    "text": "#cbd5e1"
+                }
+            }
+        }
+    }
+}

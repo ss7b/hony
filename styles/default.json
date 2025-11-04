@@ -1,0 +1,39 @@
+{
+    "version": 2,
+    "title": "Default",
+    "settings": {
+        "color": {
+            "palette": [
+                {
+                    "slug": "primary",
+                    "color": "#2563eb",
+                    "name": "Primary"
+                },
+                {
+                    "slug": "secondary",
+                    "color": "#64748b",
+                    "name": "Secondary"
+                },
+                {
+                    "slug": "accent",
+                    "color": "#f59e0b",
+                    "name": "Accent"
+                }
+            ]
+        }
+    },
+    "styles": {
+        "color": {
+            "background": "#ffffff",
+            "text": "#1e293b"
+        },
+        "blocks": {
+            "core/button": {
+                "color": {
+                    "background": "#2563eb",
+                    "text": "#ffffff"
+                }
+            }
+        }
+    }
+}

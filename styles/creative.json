@@ -1,0 +1,163 @@
+{
+    "version": 2,
+    "title": "Creative",
+    "settings": {
+        "color": {
+            "palette": [
+                {
+                    "slug": "primary",
+                    "color": "#8b5cf6",
+                    "name": "Primary"
+                },
+                {
+                    "slug": "secondary",
+                    "color": "#06b6d4",
+                    "name": "Secondary"
+                },
+                {
+                    "slug": "accent",
+                    "color": "#f59e0b",
+                    "name": "Accent"
+                },
+                {
+                    "slug": "background",
+                    "color": "#fafafa",
+                    "name": "Background"
+                },
+                {
+                    "slug": "surface",
+                    "color": "#ffffff",
+                    "name": "Surface"
+                },
+                {
+                    "slug": "text-primary",
+                    "color": "#1e293b",
+                    "name": "Text Primary"
+                },
+                {
+                    "slug": "text-secondary",
+                    "color": "#64748b",
+                    "name": "Text Secondary"
+                }
+            ],
+            "gradients": [
+                {
+                    "slug": "creative-gradient-1",
+                    "gradient": "linear-gradient(135deg, #8b5cf6 0%, #06b6d4 50%, #10b981 100%)",
+                    "name": "Creative Gradient 1"
+                },
+                {
+                    "slug": "creative-gradient-2",
+                    "gradient": "linear-gradient(135deg, #f59e0b 0%, #ef4444 50%, #ec4899 100%)",
+                    "name": "Creative Gradient 2"
+                }
+            ]
+        },
+        "typography": {
+            "fontFamilies": [
+                {
+                    "fontFamily": "'Poppins', sans-serif",
+                    "slug": "creative-sans",
+                    "name": "Creative Sans"
+                },
+                {
+                    "fontFamily": "'Montserrat', sans-serif",
+                    "slug": "creative-alt",
+                    "name": "Creative Alt"
+                }
+            ]
+        }
+    },
+    "styles": {
+        "color": {
+            "background": "#fafafa",
+            "text": "#1e293b"
+        },
+        "typography": {
+            "fontFamily": "'Poppins', sans-serif",
+            "lineHeight": "1.6"
+        },
+        "blocks": {
+            "core/group": {
+                "color": {
+                    "background": "#ffffff"
+                },
+                "border": {
+                    "radius": "16px"
+                },
+                "shadow": "0 10px 25px -5px rgba(0, 0, 0, 0.1)",
+                "spacing": {
+                    "padding": {
+                        "top": "3rem",
+                        "bottom": "3rem",
+                        "left": "2rem",
+                        "right": "2rem"
+                    }
+                }
+            },
+            "core/heading": {
+                "color": {
+                    "text": "#1e293b"
+                },
+                "typography": {
+                    "fontFamily": "'Montserrat', sans-serif",
+                    "fontWeight": "700",
+                    "lineHeight": "1.2"
+                }
+            },
+            "core/paragraph": {
+                "color": {
+                    "text": "#64748b"
+                }
+            },
+            "core/button": {
+                "color": {
+                    "background": "#8b5cf6",
+                    "text": "#ffffff"
+                },
+                "border": {
+                    "radius": "8px"
+                },
+                "typography": {
+                    "fontWeight": "600"
+                },
+                "spacing": {
+                    "padding": {
+                        "top": "1rem",
+                        "bottom": "1rem",
+                        "left": "2rem",
+                        "right": "2rem"
+                    }
+                },
+                ":hover": {
+                    "color": {
+                        "background": "#7c3aed"
+                    },
+                    "transform": "translateY(-2px)",
+                    "shadow": "0 20px 25px -5px rgba(139, 92, 246, 0.4)"
+                }
+            },
+            "core/navigation": {
+                "color": {
+                    "text": "#1e293b"
+                },
+                "typography": {
+                    "fontWeight": "600"
+                }
+            },
+            "core/separator": {
+                "color": {
+                    "background": "linear-gradient(90deg, #8b5cf6, #06b6d4, #f59e0b)"
+                },
+                "border": {
+                    "width": "3px"
+                }
+            },
+            "core/image": {
+                "border": {
+                    "radius": "12px"
+                }
+            }
+        }
+    }
+}

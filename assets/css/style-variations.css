@@ -1,0 +1,77 @@
+/* Style Variations Additional Styles */
+
+/* Dark Mode Enhancements */
+.is-style-dark-mode {
+    color-scheme: dark;
+}
+
+.is-style-dark-mode img {
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+.is-style-dark-mode img:hover {
+    opacity: 1;
+}
+
+/* Minimal Mode Cleanup */
+.is-style-minimal * {
+    max-width: 100%;
+}
+
+.is-style-minimal .wp-block-group:not(.has-background) {
+    background: transparent !important;
+}
+
+/* Warm & Cozy Animations */
+.is-style-warm-cozy .wp-block-button__link {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.is-style-warm-cozy .wp-block-cover {
+    background-blend-mode: soft-light;
+}
+
+/* Corporate Professional Spacing */
+.is-style-corporate .wp-block-group {
+    margin-bottom: 2rem;
+}
+
+.is-style-corporate .wp-block-heading {
+    margin-top: 0;
+}
+
+/* Creative Transformations */
+.is-style-creative .wp-block-group.has-background {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.is-style-creative .wp-block-group.has-background:hover {
+    transform: translateY(-5px);
+}
+
+/* RTL Support for All Variations */
+[dir="rtl"].is-style-dark-mode .wp-block-quote {
+    border-left: none;
+    border-right: 4px solid var(--wp--preset--color--primary);
+}
+
+[dir="rtl"].is-style-warm-cozy .wp-block-quote {
+    border-left: none;
+    border-right: 4px solid var(--wp--preset--color--accent);
+}
+
+/* Print Styles for Variations */
+@media print {
+    .is-style-dark-mode {
+        background: white !important;
+        color: black !important;
+    }
+    
+    .is-style-creative .wp-block-button__link,
+    .is-style-warm-cozy .wp-block-button__link {
+        background: #000000 !important;
+        color: #ffffff !important;
+        border: 1px solid #000000 !important;
+    }
+}

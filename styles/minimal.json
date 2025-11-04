@@ -1,0 +1,138 @@
+{
+    "version": 2,
+    "title": "Minimal",
+    "settings": {
+        "color": {
+            "palette": [
+                {
+                    "slug": "primary",
+                    "color": "#000000",
+                    "name": "Primary"
+                },
+                {
+                    "slug": "secondary",
+                    "color": "#666666",
+                    "name": "Secondary"
+                },
+                {
+                    "slug": "accent",
+                    "color": "#000000",
+                    "name": "Accent"
+                },
+                {
+                    "slug": "background",
+                    "color": "#ffffff",
+                    "name": "Background"
+                },
+                {
+                    "slug": "surface",
+                    "color": "#fafafa",
+                    "name": "Surface"
+                },
+                {
+                    "slug": "text-primary",
+                    "color": "#000000",
+                    "name": "Text Primary"
+                },
+                {
+                    "slug": "text-secondary",
+                    "color": "#666666",
+                    "name": "Text Secondary"
+                }
+            ]
+        },
+        "typography": {
+            "fontFamilies": [
+                {
+                    "fontFamily": "Helvetica, Arial, sans-serif",
+                    "slug": "minimal-font",
+                    "name": "Minimal Font"
+                }
+            ]
+        }
+    },
+    "styles": {
+        "color": {
+            "background": "#ffffff",
+            "text": "#000000"
+        },
+        "typography": {
+            "fontFamily": "Helvetica, Arial, sans-serif",
+            "fontSize": "1rem",
+            "lineHeight": "1.5"
+        },
+        "blocks": {
+            "core/group": {
+                "color": {
+                    "background": "transparent"
+                },
+                "spacing": {
+                    "padding": {
+                        "top": "2rem",
+                        "bottom": "2rem"
+                    }
+                }
+            },
+            "core/heading": {
+                "color": {
+                    "text": "#000000"
+                },
+                "typography": {
+                    "fontFamily": "Helvetica, Arial, sans-serif",
+                    "fontWeight": "400",
+                    "lineHeight": "1.2"
+                }
+            },
+            "core/paragraph": {
+                "color": {
+                    "text": "#000000"
+                },
+                "typography": {
+                    "lineHeight": "1.5"
+                }
+            },
+            "core/button": {
+                "color": {
+                    "background": "#000000",
+                    "text": "#ffffff"
+                },
+                "border": {
+                    "radius": "0px"
+                },
+                "typography": {
+                    "fontWeight": "400",
+                    "textTransform": "uppercase",
+                    "letterSpacing": "1px"
+                },
+                "spacing": {
+                    "padding": {
+                        "top": "0.75rem",
+                        "bottom": "0.75rem",
+                        "left": "1.5rem",
+                        "right": "1.5rem"
+                    }
+                },
+                ":hover": {
+                    "color": {
+                        "background": "#333333"
+                    }
+                }
+            },
+            "core/navigation": {
+                "color": {
+                    "text": "#000000"
+                },
+                "typography": {
+                    "fontWeight": "400",
+                    "textTransform": "uppercase",
+                    "letterSpacing": "1px"
+                }
+            },
+            "core/separator": {
+                "color": {
+                    "background": "#e5e5e5"
+                }
+            }
+        }
+    }
+}

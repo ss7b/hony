@@ -1,12 +1,16 @@
-<!-- wp:group {"layout":{"type":"flex","justifyContent":"space-between"}} -->
-<div class="wp-block-group">
-    <!-- wp:site-logo /-->
-    
-    <!-- wp:navigation {"layout":{"type":"flex","justifyContent":"right"},"style":{"spacing":{"blockGap":"30px"}}} -->
-    <!-- wp:navigation-link {"label":"Home","url":"/"} /-->
-    <!-- wp:navigation-link {"label":"Shop","url":"/shop/"} /-->
-    <!-- wp:navigation-link {"label":"About","url":"/about/"} /-->
-    <!-- wp:navigation-link {"label":"Contact","url":"/contact/"} /-->
-    <!-- /wp:navigation -->
-</div>
+<!-- wp:group {"tagName":"header","layout":{"type":"constrained"}} -->
+<header class="wp-block-group">
+	<!-- wp:group {"layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap"}} -->
+	<div class="wp-block-group">
+		<!-- wp:site-logo /-->
+		
+		<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} -->
+		<div class="wp-block-group">
+			<!-- wp:navigation {"layout":{"type":"flex","justifyContent":"right"}} /-->
+			<!-- wp:search /-->
+		</div>
+		<!-- /wp:group -->
+	</div>
+	<!-- /wp:group -->
+</header>
 <!-- /wp:group -->

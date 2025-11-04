@@ -1,0 +1,173 @@
+{
+    "version": 2,
+    "title": "Warm & Cozy",
+    "settings": {
+        "color": {
+            "palette": [
+                {
+                    "slug": "primary",
+                    "color": "#dc2626",
+                    "name": "Primary"
+                },
+                {
+                    "slug": "secondary",
+                    "color": "#ea580c",
+                    "name": "Secondary"
+                },
+                {
+                    "slug": "accent",
+                    "color": "#d97706",
+                    "name": "Accent"
+                },
+                {
+                    "slug": "background",
+                    "color": "#fef7ed",
+                    "name": "Background"
+                },
+                {
+                    "slug": "surface",
+                    "color": "#fffbeb",
+                    "name": "Surface"
+                },
+                {
+                    "slug": "text-primary",
+                    "color": "#431407",
+                    "name": "Text Primary"
+                },
+                {
+                    "slug": "text-secondary",
+                    "color": "#7c2d12",
+                    "name": "Text Secondary"
+                },
+                {
+                    "slug": "warm-gray",
+                    "color": "#78716c",
+                    "name": "Warm Gray"
+                }
+            ],
+            "gradients": [
+                {
+                    "slug": "warm-gradient",
+                    "gradient": "linear-gradient(135deg, #fed7aa 0%, #fdba74 50%, #fb923c 100%)",
+                    "name": "Warm Gradient"
+                },
+                {
+                    "slug": "cozy-gradient",
+                    "gradient": "linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fcd34d 100%)",
+                    "name": "Cozy Gradient"
+                }
+            ]
+        },
+        "typography": {
+            "fontFamilies": [
+                {
+                    "fontFamily": "'Playfair Display', serif",
+                    "slug": "warm-serif",
+                    "name": "Warm Serif"
+                },
+                {
+                    "fontFamily": "'Inter', sans-serif",
+                    "slug": "warm-sans",
+                    "name": "Warm Sans"
+                }
+            ]
+        }
+    },
+    "styles": {
+        "color": {
+            "background": "#fef7ed",
+            "text": "#431407"
+        },
+        "typography": {
+            "fontFamily": "'Inter', sans-serif",
+            "lineHeight": "1.6"
+        },
+        "blocks": {
+            "core/group": {
+                "color": {
+                    "background": "#fffbeb"
+                },
+                "border": {
+                    "radius": "12px"
+                },
+                "spacing": {
+                    "padding": {
+                        "top": "3rem",
+                        "bottom": "3rem",
+                        "left": "2rem",
+                        "right": "2rem"
+                    }
+                }
+            },
+            "core/heading": {
+                "color": {
+                    "text": "#431407"
+                },
+                "typography": {
+                    "fontFamily": "'Playfair Display', serif",
+                    "fontWeight": "700",
+                    "lineHeight": "1.2"
+                }
+            },
+            "core/paragraph": {
+                "color": {
+                    "text": "#7c2d12"
+                }
+            },
+            "core/button": {
+                "color": {
+                    "background": "#dc2626",
+                    "text": "#ffffff"
+                },
+                "border": {
+                    "radius": "8px"
+                },
+                "typography": {
+                    "fontWeight": "600"
+                },
+                "spacing": {
+                    "padding": {
+                        "top": "1rem",
+                        "bottom": "1rem",
+                        "left": "2rem",
+                        "right": "2rem"
+                    }
+                },
+                ":hover": {
+                    "color": {
+                        "background": "#b91c1c"
+                    },
+                    "shadow": "0 10px 15px -3px rgba(220, 38, 38, 0.3)"
+                }
+            },
+            "core/navigation": {
+                "color": {
+                    "text": "#431407"
+                },
+                "typography": {
+                    "fontWeight": "500"
+                }
+            },
+            "core/separator": {
+                "color": {
+                    "background": "#fed7aa"
+                },
+                "border": {
+                    "width": "2px"
+                }
+            },
+            "core/quote": {
+                "color": {
+                    "background": "#fffbeb",
+                    "text": "#7c2d12"
+                },
+                "border": {
+                    "left": {
+                        "color": "#ea580c",
+                        "width": "4px"
+                    }
+                }
+            }
+        }
+    }
+}

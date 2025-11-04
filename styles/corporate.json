@@ -1,0 +1,169 @@
+{
+    "version": 2,
+    "title": "Corporate",
+    "settings": {
+        "color": {
+            "palette": [
+                {
+                    "slug": "primary",
+                    "color": "#1e40af",
+                    "name": "Primary"
+                },
+                {
+                    "slug": "secondary",
+                    "color": "#374151",
+                    "name": "Secondary"
+                },
+                {
+                    "slug": "accent",
+                    "color": "#059669",
+                    "name": "Accent"
+                },
+                {
+                    "slug": "background",
+                    "color": "#f9fafb",
+                    "name": "Background"
+                },
+                {
+                    "slug": "surface",
+                    "color": "#ffffff",
+                    "name": "Surface"
+                },
+                {
+                    "slug": "text-primary",
+                    "color": "#111827",
+                    "name": "Text Primary"
+                },
+                {
+                    "slug": "text-secondary",
+                    "color": "#6b7280",
+                    "name": "Text Secondary"
+                }
+            ],
+            "gradients": [
+                {
+                    "slug": "corporate-gradient",
+                    "gradient": "linear-gradient(135deg, #1e40af 0%, #3730a3 100%)",
+                    "name": "Corporate Gradient"
+                },
+                {
+                    "slug": "professional-gradient",
+                    "gradient": "linear-gradient(135deg, #374151 0%, #1f2937 100%)",
+                    "name": "Professional Gradient"
+                }
+            ]
+        },
+        "typography": {
+            "fontFamilies": [
+                {
+                    "fontFamily": "'Inter', sans-serif",
+                    "slug": "corporate-sans",
+                    "name": "Corporate Sans"
+                },
+                {
+                    "fontFamily": "'Roboto', sans-serif",
+                    "slug": "corporate-alt",
+                    "name": "Corporate Alt"
+                }
+            ]
+        }
+    },
+    "styles": {
+        "color": {
+            "background": "#f9fafb",
+            "text": "#111827"
+        },
+        "typography": {
+            "fontFamily": "'Inter', sans-serif",
+            "fontSize": "0.875rem",
+            "lineHeight": "1.5"
+        },
+        "blocks": {
+            "core/group": {
+                "color": {
+                    "background": "#ffffff"
+                },
+                "border": {
+                    "radius": "4px"
+                },
+                "shadow": "0 1px 3px 0 rgba(0, 0, 0, 0.1)",
+                "spacing": {
+                    "padding": {
+                        "top": "2rem",
+                        "bottom": "2rem",
+                        "left": "1.5rem",
+                        "right": "1.5rem"
+                    }
+                }
+            },
+            "core/heading": {
+                "color": {
+                    "text": "#111827"
+                },
+                "typography": {
+                    "fontFamily": "'Inter', sans-serif",
+                    "fontWeight": "600",
+                    "lineHeight": "1.25"
+                }
+            },
+            "core/paragraph": {
+                "color": {
+                    "text": "#374151"
+                },
+                "typography": {
+                    "fontSize": "0.875rem",
+                    "lineHeight": "1.5"
+                }
+            },
+            "core/button": {
+                "color": {
+                    "background": "#1e40af",
+                    "text": "#ffffff"
+                },
+                "border": {
+                    "radius": "4px"
+                },
+                "typography": {
+                    "fontWeight": "500",
+                    "fontSize": "0.875rem"
+                },
+                "spacing": {
+                    "padding": {
+                        "top": "0.625rem",
+                        "bottom": "0.625rem",
+                        "left": "1.25rem",
+                        "right": "1.25rem"
+                    }
+                },
+                ":hover": {
+                    "color": {
+                        "background": "#1e3a8a"
+                    }
+                }
+            },
+            "core/navigation": {
+                "color": {
+                    "text": "#374151"
+                },
+                "typography": {
+                    "fontWeight": "500",
+                    "fontSize": "0.875rem"
+                }
+            },
+            "core/separator": {
+                "color": {
+                    "background": "#e5e7eb"
+                }
+            },
+            "core/table": {
+                "color": {
+                    "background": "#ffffff"
+                },
+                "border": {
+                    "color": "#e5e7eb",
+                    "width": "1px"
+                }
+            }
+        }
+    }
+}
