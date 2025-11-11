@@ -1,6 +1,6 @@
 {
     "$schema": "https://schemas.wp.org/trunk/block.json",
-    "apiVersion": 2,
+    "apiVersion": 3,
     "name": "modern-fse/product-category-grid",
     "version": "1.1.0",
     "title": "Product Category Grid",
@@ -67,16 +67,45 @@
         "sliderSpeed": {
             "type": "number",
             "default": 500
+        },
+        "hoverBadge": {
+            "type": "boolean",
+            "default": true
+        },
+        "hoverBadgeText": {
+            "type": "string",
+            "default": "عرض الفئة"
+        },
+        "hoverEffect": {
+            "type": "string",
+            "default": "lift"
+        },
+        "borderRadius": {
+            "type": "number",
+            "default": 12
+        },
+        "showBadgeCount": {
+            "type": "boolean",
+            "default": true
+        },
+        "badgePosition": {
+            "type": "string",
+            "default": "bottom-right"
+        },
+        "spaceBetween": {
+            "type": "number",
+            "default": 20
+        },
+        "loop": {
+            "type": "boolean",
+            "default": true
         }
     },
     "supports": {
-        "html": false,
-        "align": ["wide", "full"],
-        "spacing": true,
-        "color": true,
-        "typography": true
+        "html": false
     },
     "editorScript": "file:./editor.js",
+    "editorStyle": "file:./editor.css",
     "script": "file:./view.js",
     "style": "file:./style.css"
 }

@@ -1,10 +1,11 @@
-( function( blocks, element, components, editor, data ) {
-    const { InspectorControls } = editor;
-    const { createElement: el } = element;
-    const { PanelBody, RangeControl, SelectControl, ToggleControl, RadioControl, TextControl } = components;
-    const { useSelect } = data;
+( function() {
+    const { registerBlockType } = wp.blocks;
+    const { InspectorControls } = wp.blockEditor;
+    const { createElement: el } = wp.element;
+    const { PanelBody, RangeControl, SelectControl, ToggleControl, RadioControl, TextControl } = wp.components;
+    const { useSelect } = wp.data;
 
-    blocks.registerBlockType( 'modern-fse/products-swiper', {
+    registerBlockType( 'modern-fse/products-swiper', {
         title: 'Products Swiper',
         icon: 'carousel',
         category: 'woocommerce',
@@ -346,4 +347,4 @@
             return null;
         }
     } );
-} )( window.wp.blocks, window.wp.element, window.wp.components, window.wp.blockEditor, window.wp.data );
+} )();

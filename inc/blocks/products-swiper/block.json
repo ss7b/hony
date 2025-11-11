@@ -90,13 +90,10 @@
         }
     },
     "supports": {
-        "html": false,
-        "align": ["wide", "full"],
-        "spacing": {},
-        "color": {},
-        "typography": {}
+        "html": false
     },
     "editorScript": "file:./editor.js",
+    "editorStyle": "file:./editor.css",
     "script": "file:./view.js",
     "style": "file:./style.css"
 }

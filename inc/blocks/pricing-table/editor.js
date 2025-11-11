@@ -1,9 +1,10 @@
-( function( blocks, element, components, editor ) {
-    const { RichText, InspectorControls, InnerBlocks } = editor;
-    const { createElement: el } = element;
-    const { PanelBody, RangeControl, Button, ToggleControl, TextControl, SelectControl } = components;
+( function() {
+    const { registerBlockType } = wp.blocks;
+    const { RichText, InspectorControls, InnerBlocks } = wp.blockEditor;
+    const { createElement: el } = wp.element;
+    const { PanelBody, RangeControl, Button, ToggleControl, TextControl, SelectControl } = wp.components;
 
-    blocks.registerBlockType( 'modern-fse/pricing-table', {
+    registerBlockType( 'modern-fse/pricing-table', {
         title: 'Pricing Table',
         icon: 'money',
         category: 'design',
@@ -260,4 +261,4 @@
             );
         }
     } );
-} )( window.wp.blocks, window.wp.element, window.wp.components, window.wp.blockEditor );
+} )();

@@ -1,9 +1,10 @@
-( function( blocks, element, components, editor ) {
-    const { RichText, InspectorControls } = editor;
-    const { createElement: el } = element;
-    const { PanelBody, RangeControl, ToggleControl } = components;
+( function() {
+    const { registerBlockType } = wp.blocks;
+    const { RichText, InspectorControls } = wp.blockEditor;
+    const { createElement: el } = wp.element;
+    const { PanelBody, RangeControl, ToggleControl } = wp.components;
 
-    blocks.registerBlockType( 'modern-fse/progress-bar', {
+    registerBlockType( 'modern-fse/progress-bar', {
         title: 'Progress Bar',
         icon: 'chart-bar',
         category: 'design',
@@ -112,4 +113,4 @@
             );
         }
     } );
-} )( window.wp.blocks, window.wp.element, window.wp.components, window.wp.blockEditor );
+} )();

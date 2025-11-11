@@ -10,6 +10,9 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+// تحميل معالج AJAX للبلوكات
+require_once get_template_directory() . '/inc/blocks/products-tabs/ajax-handler.php';
+
 /**
  * تسجيل جميع البلوكات المخصصة
  */
@@ -24,7 +27,8 @@ function modern_fse_register_all_blocks()
         'progress-bar',
         'social-icons',
         'product-category-grid',
-        'products-swiper'
+        'products-swiper',
+        'products-tabs'
     );
 
     foreach ($blocks as $block_name) {
@@ -55,6 +59,10 @@ function modern_fse_register_single_block($block_name)
     } elseif ($block_name === 'products-swiper') {
         register_block_type($block_path . '/block.json', array(
             'render_callback' => 'modern_fse_render_products_swiper',
+        ));
+    } elseif ($block_name === 'products-tabs') {
+        register_block_type($block_path . '/block.json', array(
+            'render_callback' => 'modern_fse_render_products_tabs',
         ));
     } else {
         register_block_type($block_path . '/block.json');
@@ -466,6 +474,18 @@ function modern_fse_enqueue_block_frontend_assets($block_name, $block_path, $blo
             MODERN_FSE_THEME_VERSION
         );
     }
+
+    // Localize script للبلوكات التي تحتاج AJAX
+    if ($block_name === 'products-tabs' && wp_script_is('modern-fse-products-tabs-view', 'registered')) {
+        wp_localize_script(
+            'modern-fse-products-tabs-view',
+            'productsTabsAjax',
+            array(
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'nonce' => wp_create_nonce('products_tabs_nonce')
+            )
+        );
+    }
 }
 
 /**
@@ -481,7 +501,8 @@ function modern_fse_enqueue_block_assets()
         'progress-bar',
         'social-icons',
         'product-category-grid',
-        'products-swiper'
+        'products-swiper',
+        'products-tabs'
     );
 
     foreach ($blocks as $block_name) {
@@ -542,7 +563,8 @@ function modern_fse_enqueue_block_editor_assets()
         'progress-bar',
         'social-icons',
         'product-category-grid',
-        'products-swiper'
+        'products-swiper',
+        'products-tabs'
     );
 
     foreach ($blocks as $block_name) {
@@ -554,22 +576,9 @@ function modern_fse_enqueue_block_editor_assets()
             wp_enqueue_script(
                 'modern-fse-' . $block_name . '-editor',
                 $editor_js_url,
-                array('wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'wp-i18n'),
+                array('wp-blocks', 'wp-element', 'wp-components', 'wp-block-editor', 'wp-i18n'),
                 MODERN_FSE_THEME_VERSION,
                 true
-            );
-        }
-
-        // تحميل CSS للمحرر
-        $editor_css_path = get_template_directory() . '/inc/blocks/' . $block_name . '/editor.css';
-        $editor_css_url = get_template_directory_uri() . '/inc/blocks/' . $block_name . '/editor.css';
-
-        if (file_exists($editor_css_path)) {
-            wp_enqueue_style(
-                'modern-fse-' . $block_name . '-editor',
-                $editor_css_url,
-                array('wp-edit-blocks'),
-                MODERN_FSE_THEME_VERSION
             );
         }
     }
@@ -642,6 +651,12 @@ function modern_fse_get_available_blocks()
             'name' => 'Products Swiper',
             'description' => 'عرض المنتجات في Swiper مع خيارات متقدمة',
             'icon' => 'carousel',
+            'category' => 'woocommerce'
+        ),
+        'products-tabs' => array(
+            'name' => 'Products Tabs',
+            'description' => 'عرض المنتجات في تبويبات مع تأثيرات حركية جميلة',
+            'icon' => 'tabs',
             'category' => 'woocommerce'
         )
     );
@@ -730,6 +745,244 @@ function modern_fse_disable_blocks_without_dependencies()
     }
 }
 add_action('init', 'modern_fse_disable_blocks_without_dependencies', 100);
+
+/**
+ * Render callback for Products Tabs Block
+ */
+function modern_fse_render_products_tabs($attributes, $content)
+{
+    ob_start();
+
+    // التحقق من وجود ووكومرس
+    if (!class_exists('WooCommerce')) {
+        echo '<div class="notice notice-warning"><p>يتطلب هذا البلوك إضافة WooCommerce</p></div>';
+        return ob_get_clean();
+    }
+
+    // الحصول على الخصائص بقيم افتراضية
+    $tabs = isset($attributes['tabs']) ? $attributes['tabs'] : [];
+    $limit = isset($attributes['limit']) ? intval($attributes['limit']) : 8;
+    $columns = isset($attributes['columns']) ? intval($attributes['columns']) : 4;
+    $image_size = isset($attributes['imageSize']) ? $attributes['imageSize'] : 'medium';
+    $show_title = isset($attributes['showTitle']) ? boolval($attributes['showTitle']) : true;
+    $show_price = isset($attributes['showPrice']) ? boolval($attributes['showPrice']) : true;
+    $show_rating = isset($attributes['showRating']) ? boolval($attributes['showRating']) : true;
+    $show_add_to_cart = isset($attributes['showAddToCart']) ? boolval($attributes['showAddToCart']) : true;
+    $card_style = isset($attributes['cardStyle']) ? $attributes['cardStyle'] : 'hover-lift';
+    $tab_style = isset($attributes['tabStyle']) ? $attributes['tabStyle'] : 'modern';
+    $animation_type = isset($attributes['animationType']) ? $attributes['animationType'] : 'fade';
+    $animation_speed = isset($attributes['animationSpeed']) ? intval($attributes['animationSpeed']) : 300;
+    $tab_position = isset($attributes['tabPosition']) ? $attributes['tabPosition'] : 'top';
+
+    // التحقق من وجود تبويبات
+    if (empty($tabs) || !is_array($tabs)) {
+        echo '<p class="no-tabs-found">لم يتم العثور على تبويبات</p>';
+        return ob_get_clean();
+    }
+
+    // معرّف فريد للبلوك
+    $block_id = 'products-tabs-' . uniqid();
+
+    ?>
+    <div class="products-tabs-block" 
+        id="<?php echo esc_attr($block_id); ?>"
+        data-animation-type="<?php echo esc_attr($animation_type); ?>"
+        data-animation-speed="<?php echo esc_attr($animation_speed); ?>"
+        data-tab-position="<?php echo esc_attr($tab_position); ?>"
+        data-card-style="<?php echo esc_attr($card_style); ?>"
+        data-tab-style="<?php echo esc_attr($tab_style); ?>"
+        data-limit="<?php echo esc_attr($limit); ?>"
+        data-columns="<?php echo esc_attr($columns); ?>"
+        data-image-size="<?php echo esc_attr($image_size); ?>"
+        data-show-title="<?php echo esc_attr($show_title ? 'true' : 'false'); ?>"
+        data-show-price="<?php echo esc_attr($show_price ? 'true' : 'false'); ?>"
+        data-show-rating="<?php echo esc_attr($show_rating ? 'true' : 'false'); ?>"
+        data-show-add-to-cart="<?php echo esc_attr($show_add_to_cart ? 'true' : 'false'); ?>"
+        data-card-style-attr="<?php echo esc_attr($card_style); ?>">
+
+        <!-- Tab Navigation -->
+        <div class="tabs-nav tab-style-<?php echo esc_attr($tab_style); ?> tab-position-<?php echo esc_attr($tab_position); ?>">
+            <?php
+            foreach ($tabs as $index => $tab) {
+                $active_class = ($index === 0) ? 'active' : '';
+                $tab_id = isset($tab['id']) ? sanitize_key($tab['id']) : 'tab-' . $index;
+                $tab_name = isset($tab['name']) ? sanitize_text_field($tab['name']) : 'Tab ' . ($index + 1);
+                ?>
+                <?php
+                $tab_type_attr = isset($tab['type']) ? sanitize_key($tab['type']) : 'all';
+                $tab_category_id_attr = isset($tab['categoryId']) ? intval($tab['categoryId']) : 0;
+                $tab_category_slug_attr = isset($tab['categoryName']) ? sanitize_text_field($tab['categoryName']) : '';
+                ?>
+                <button class="tab-button <?php echo esc_attr($active_class); ?>" 
+                        data-tab-id="<?php echo esc_attr($tab_id); ?>"
+                        data-tab-index="<?php echo esc_attr($index); ?>"
+                        data-tab-type="<?php echo esc_attr($tab_type_attr); ?>"
+                        data-category-id="<?php echo esc_attr($tab_category_id_attr); ?>"
+                        data-category-slug="<?php echo esc_attr($tab_category_slug_attr); ?>">
+                    <?php echo esc_html($tab_name); ?>
+                </button>
+                <?php
+            }
+            ?>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="tab-content-wrapper">
+            <?php
+            foreach ($tabs as $index => $tab) {
+                $tab_id = isset($tab['id']) ? sanitize_key($tab['id']) : 'tab-' . $index;
+                $active_class = ($index === 0) ? 'active' : '';
+                $product_type = isset($tab['type']) ? sanitize_key($tab['type']) : 'all';
+                $category_id = isset($tab['categoryId']) ? intval($tab['categoryId']) : 0;
+
+                // بناء معاملات الاستعلام
+                $args = array(
+                    'post_type' => 'product',
+                    'posts_per_page' => $limit,
+                    'orderby' => 'date',
+                    'order' => 'DESC',
+                );
+
+                // تصفية حسب نوع المنتج
+                if ($product_type === 'best_selling') {
+                    $args['orderby'] = 'meta_value_num';
+                    $args['meta_key'] = 'total_sales';
+                    $args['order'] = 'DESC';
+                } elseif ($product_type === 'category' && $category_id > 0) {
+                    $args['tax_query'] = array(
+                        array(
+                            'taxonomy' => 'product_cat',
+                            'field' => 'term_id',
+                            'terms' => $category_id,
+                        ),
+                    );
+                }
+
+                $query = new WP_Query($args);
+
+                ?>
+             <div class="tab-panel <?php echo esc_attr($active_class); ?>" 
+                 data-tab-id="<?php echo esc_attr($tab_id); ?>"
+                 data-tab-index="<?php echo esc_attr($index); ?>"
+                 data-tab-type="<?php echo esc_attr($product_type); ?>"
+                 data-category-id="<?php echo esc_attr($category_id); ?>"
+                 data-category-slug="<?php echo esc_attr(isset($tab['categoryName']) ? $tab['categoryName'] : ''); ?>">
+
+                    <?php
+                    if ($query->have_posts()) {
+                        ?>
+                        <div class="products-grid" style="grid-template-columns: repeat(<?php echo esc_attr($columns); ?>, 1fr);">
+                            <?php
+                            while ($query->have_posts()) {
+                                $query->the_post();
+                                $product = wc_get_product(get_the_ID());
+                                $product_id = get_the_ID();
+
+                                if (!$product) {
+                                    continue;
+                                }
+
+                                // الحصول على صورة المنتج
+                                $image_url = has_post_thumbnail($product_id)
+                                    ? get_the_post_thumbnail_url($product_id, $image_size)
+                                    : wc_placeholder_img_src();
+
+                                // التحقق من وجود خصم
+                                $is_on_sale = $product->is_on_sale();
+                                $badge_text = $is_on_sale ? '-' . round(( ( $product->get_regular_price() - $product->get_sale_price() ) / $product->get_regular_price() ) * 100) . '%' : '';
+                                ?>
+
+                                <div class="product-card card-style-<?php echo esc_attr($card_style); ?>">
+                                    
+                                    <!-- Product Image -->
+                                    <div class="product-image">
+                                        <a href="<?php echo esc_url(get_the_permalink($product_id)); ?>" 
+                                           title="<?php echo esc_attr(get_the_title($product_id)); ?>">
+                                            <img src="<?php echo esc_url($image_url); ?>" 
+                                                 alt="<?php echo esc_attr(get_the_title($product_id)); ?>"
+                                                 loading="lazy">
+                                        </a>
+
+                                        <!-- Sale Badge -->
+                                        <?php if ($is_on_sale && !empty($badge_text)): ?>
+                                            <span class="product-badge"><?php echo esc_html($badge_text); ?></span>
+                                        <?php endif; ?>
+                                    </div>
+
+                                    <!-- Product Info -->
+                                    <div class="product-info">
+                                        <?php if ($show_title): ?>
+                                            <a href="<?php echo esc_url(get_the_permalink($product_id)); ?>" class="product-title">
+                                                <?php echo esc_html(get_the_title($product_id)); ?>
+                                            </a>
+                                        <?php endif; ?>
+
+                                        <?php if ($show_price): ?>
+                                            <div class="product-price">
+                                                <?php echo wp_kses_post($product->get_price_html()); ?>
+                                            </div>
+                                        <?php endif; ?>
+
+                                        <?php if ($show_rating && function_exists('wc_get_rating_html')): ?>
+                                            <div class="product-rating">
+                                                <?php echo wp_kses_post(wc_get_rating_html($product->get_average_rating(), $product->get_review_count())); ?>
+                                            </div>
+                                        <?php endif; ?>
+
+                                        <?php if ($show_add_to_cart): ?>
+                                            <div class="product-actions">
+                                                <?php
+                                                echo apply_filters(
+                                                    'woocommerce_loop_add_to_cart_link',
+                                                    sprintf(
+                                                        '<a href="%s" data-quantity="%s" class="%s" %s>%s</a>',
+                                                        esc_url($product->add_to_cart_url()),
+                                                        esc_attr(isset($quantity) ? $quantity : 1),
+                                                        esc_attr(implode(' ', array_filter(array(
+                                                            'add-to-cart-btn',
+                                                            'button',
+                                                            'product_type_' . $product->get_type(),
+                                                            $product->is_purchasable() && $product->is_in_stock() ? 'add_to_cart_button' : '',
+                                                            $product->supports('ajax_add_to_cart') ? 'ajax_add_to_cart' : '',
+                                                        )))),
+                                                        $product->supports('ajax_add_to_cart') ? apply_filters('woocommerce_product_add_to_cart_handler', 'ajax', $product) : '',
+                                                        esc_html($product->add_to_cart_text())
+                                                    ),
+                                                    $product
+                                                );
+                                                ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+
+                                <?php
+                            }
+                            wp_reset_postdata();
+                            ?>
+                        </div>
+                        <?php
+                    } else {
+                        ?>
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📦</div>
+                            <p class="empty-state-text"><?php echo __('لا توجد منتجات متاحة حالياً', 'modern-fse-theme'); ?></p>
+                        </div>
+                        <?php
+                    }
+                    ?>
+
+                </div>
+                <?php
+            }
+            ?>
+        </div>
+    </div>
+
+    <?php
+
+    return ob_get_clean();
+}
 
 /**
  * تحميل الترجمة للبلوكات

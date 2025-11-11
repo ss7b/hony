@@ -1,7 +1,8 @@
-( function( blocks, element, components, editor ) {
-    const { InspectorControls } = editor;
-    const { createElement: el } = element;
-    const { PanelBody, Button, SelectControl, TextControl, ToggleControl } = components;
+( function() {
+    const { registerBlockType } = wp.blocks;
+    const { InspectorControls } = wp.blockEditor;
+    const { createElement: el } = wp.element;
+    const { PanelBody, Button, SelectControl, TextControl, ToggleControl } = wp.components;
 
     const socialPlatforms = [
         { value: 'facebook', label: 'Facebook', icon: '📘', color: '#1877F2' },
@@ -14,7 +15,7 @@
         { value: 'snapchat', label: 'Snapchat', icon: '👻', color: '#FFFC00' }
     ];
 
-    blocks.registerBlockType( 'modern-fse/social-icons', {
+    registerBlockType( 'modern-fse/social-icons', {
         title: 'Social Icons',
         icon: 'share',
         category: 'design',
@@ -192,4 +193,4 @@
             );
         }
     } );
-} )( window.wp.blocks, window.wp.element, window.wp.components, window.wp.blockEditor );
+} )();

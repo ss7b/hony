@@ -1,9 +1,10 @@
-( function( blocks, element, components, editor ) {
-    const { InspectorControls } = editor;
-    const { createElement: el } = element;
-    const { PanelBody, RangeControl, SelectControl, ToggleControl, RadioControl } = components;
+( function() {
+    const { registerBlockType } = wp.blocks;
+    const { InspectorControls } = wp.blockEditor;
+    const { createElement: el } = wp.element;
+    const { PanelBody, RangeControl, SelectControl, ToggleControl, RadioControl } = wp.components;
 
-    blocks.registerBlockType( 'modern-fse/product-category-grid', {
+    registerBlockType( 'modern-fse/product-category-grid', {
         title: 'Product Category Grid',
         icon: 'grid-view',
         category: 'woocommerce',
@@ -68,6 +69,38 @@
             sliderSpeed: {
                 type: 'number',
                 default: 500
+            },
+            hoverBadge: {
+                type: 'boolean',
+                default: true
+            },
+            hoverBadgeText: {
+                type: 'string',
+                default: 'عرض الفئة'
+            },
+            hoverEffect: {
+                type: 'string',
+                default: 'lift'
+            },
+            borderRadius: {
+                type: 'number',
+                default: 12
+            },
+            showBadgeCount: {
+                type: 'boolean',
+                default: true
+            },
+            badgePosition: {
+                type: 'string',
+                default: 'bottom-right'
+            },
+            spaceBetween: {
+                type: 'number',
+                default: 20
+            },
+            loop: {
+                type: 'boolean',
+                default: true
             }
         },
 
@@ -87,7 +120,15 @@
                 autoPlaySpeed,
                 showArrows,
                 showDots,
-                sliderSpeed
+                sliderSpeed,
+                hoverBadge,
+                hoverBadgeText,
+                hoverEffect,
+                borderRadius,
+                showBadgeCount,
+                badgePosition,
+                spaceBetween,
+                loop
             } = attributes;
 
             // عرض معاينة للشبكة في المحرر
@@ -102,10 +143,14 @@
                     previewItems.push(
                         el( 'div', { 
                             className: cardClass,
-                            key: i
+                            key: i,
+                            style: { borderRadius: borderRadius + 'px' }
                         },
-                            el( 'div', { className: 'category-image preview-image' },
+                            el( 'div', { className: 'category-image preview-image', style: { borderRadius: borderRadius + 'px' } },
                                 el( 'div', { className: 'image-placeholder' }, '📷' ),
+                                hoverBadge && el( 'div', { className: `hover-badge badge-${badgePosition}` },
+                                    showBadgeCount && el( 'span', { className: 'badge-count' }, `${i + 5}` )
+                                ),
                                 isOverlay && el( 'div', { className: 'category-content overlay-content' },
                                     el( 'h3', { className: 'category-name' }, `فئة المنتج ${i + 1}` ),
                                     showDescription && el( 'p', { className: 'category-description' }, 
@@ -189,6 +234,23 @@
                             ],
                             onChange: (value) => setAttributes( { textPosition: value } )
                         } ),
+                        el( RangeControl, {
+                            label: 'نصف قطر الزاوية (px)',
+                            value: borderRadius,
+                            onChange: (value) => setAttributes( { borderRadius: value } ),
+                            min: 0,
+                            max: 50
+                        } ),
+                        el( SelectControl, {
+                            label: 'تأثير الهوفر',
+                            value: hoverEffect,
+                            options: [
+                                { label: 'رفع', value: 'lift' },
+                                { label: 'تكبير', value: 'zoom' },
+                                { label: 'مرح', value: 'scale' }
+                            ],
+                            onChange: (value) => setAttributes( { hoverEffect: value } )
+                        } ),
                         el( SelectControl, {
                             label: 'حجم الصورة',
                             value: imageSize,
@@ -202,10 +264,48 @@
                         } )
                     ),
 
+                    // إعدادات الشارة (Hover Badge)
+                    el( PanelBody, { title: 'إعدادات الشارة عند الهوفر' },
+                        el( ToggleControl, {
+                            label: 'إظهار الشارة عند الهوفر',
+                            checked: hoverBadge,
+                            onChange: (value) => setAttributes( { hoverBadge: value } )
+                        } ),
+                        hoverBadge && el( ToggleControl, {
+                            label: 'إظهار عدد المنتجات في الشارة',
+                            checked: showBadgeCount,
+                            onChange: (value) => setAttributes( { showBadgeCount: value } )
+                        } ),
+                        hoverBadge && el( SelectControl, {
+                            label: 'موضع الشارة',
+                            value: badgePosition,
+                            options: [
+                                { label: 'أعلى يسار', value: 'top-left' },
+                                { label: 'أعلى يمين', value: 'top-right' },
+                                { label: 'أسفل يسار', value: 'bottom-left' },
+                                { label: 'أسفل يمين', value: 'bottom-right' },
+                                { label: 'المركز', value: 'center' }
+                            ],
+                            onChange: (value) => setAttributes( { badgePosition: value } )
+                        } )
+                    ),
+
                     // إعدادات السلايدر
                     layoutType === 'slider' && el( PanelBody, { title: 'إعدادات السلايدر' },
+                        el( RangeControl, {
+                            label: 'المسافة بين العناصر (px)',
+                            value: spaceBetween,
+                            onChange: (value) => setAttributes( { spaceBetween: value } ),
+                            min: 0,
+                            max: 50
+                        } ),
                         el( ToggleControl, {
-                            label: 'تشغيل التلقائي',
+                            label: 'التكرار المتواصل',
+                            checked: loop,
+                            onChange: (value) => setAttributes( { loop: value } )
+                        } ),
+                        el( ToggleControl, {
+                            label: 'التشغيل التلقائي',
                             checked: autoPlay,
                             onChange: (value) => setAttributes( { autoPlay: value } )
                         } ),
@@ -299,4 +399,4 @@
             return null;
         }
     } );
-} )( window.wp.blocks, window.wp.element, window.wp.components, window.wp.blockEditor );
+} )();

@@ -1,6 +1,6 @@
 {
     "$schema": "https://schemas.wp.org/trunk/block.json",
-    "apiVersion": 2,
+    "apiVersion": 3,
     "name": "modern-fse/team-member",
     "version": "1.0.0",
     "title": "Team Member",
@@ -41,12 +41,6 @@
         }
     },
     "supports": {
-        "html": false,
-        "align": true,
-        "spacing": true,
-        "color": true,
-        "typography": true
-    },
-    "editorScript": "file:./editor.js",
-    "style": "file:./style.css"
+        "html": false
+    }
 }

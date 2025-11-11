@@ -1,0 +1,128 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "modern-fse/products-tabs",
+    "version": "1.0.0",
+    "title": "Products Tabs",
+    "category": "woocommerce",
+    "description": "عرض المنتجات في تبويبات مع تأثيرات حركية جميلة وخيارات تخصيص شاملة",
+    "keywords": ["products", "tabs", "woocommerce", "carousel", "تبويبات", "منتجات"],
+    "textdomain": "modern-fse-theme",
+    "attributes": {
+        "tabs": {
+            "type": "array",
+            "default": [
+                { "id": "tab-1", "name": "جميع المنتجات", "type": "all", "categoryId": 0, "categoryName": "" },
+                { "id": "tab-2", "name": "الأكثر مبيعاً", "type": "best_selling", "categoryId": 0, "categoryName": "" }
+            ]
+        },
+        "limit": {
+            "type": "number",
+            "default": 8
+        },
+        "columns": {
+            "type": "number",
+            "default": 4
+        },
+        "imageSize": {
+            "type": "string",
+            "default": "medium"
+        },
+        "showTitle": {
+            "type": "boolean",
+            "default": true
+        },
+        "showPrice": {
+            "type": "boolean",
+            "default": true
+        },
+        "showRating": {
+            "type": "boolean",
+            "default": true
+        },
+        "showAddToCart": {
+            "type": "boolean",
+            "default": true
+        },
+        "showBadge": {
+            "type": "boolean",
+            "default": true
+        },
+        "cardStyle": {
+            "type": "string",
+            "default": "hover-lift",
+            "enum": ["hover-lift", "shadow", "border", "gradient", "overlay"]
+        },
+        "tabStyle": {
+            "type": "string",
+            "default": "modern",
+            "enum": ["modern", "classic", "flat", "underline", "pills"]
+        },
+        "animationType": {
+            "type": "string",
+            "default": "fade",
+            "enum": ["fade", "slide-left", "slide-right", "zoom", "bounce"]
+        },
+        "animationSpeed": {
+            "type": "number",
+            "default": 300,
+            "minimum": 100,
+            "maximum": 2000
+        },
+        "tabPosition": {
+            "type": "string",
+            "default": "top",
+            "enum": ["top", "left", "bottom", "right"]
+        },
+        "spacing": {
+            "type": "number",
+            "default": 20
+        },
+        "borderRadius": {
+            "type": "number",
+            "default": 8
+        },
+        "enableLazyLoad": {
+            "type": "boolean",
+            "default": true
+        },
+        "responsiveColumns": {
+            "type": "object",
+            "default": {
+                "desktop": 4,
+                "tablet": 2,
+                "mobile": 1
+            }
+        },
+        "customColor": {
+            "type": "string",
+            "default": "#6366f1"
+        },
+        "hoverEffect": {
+            "type": "boolean",
+            "default": true
+        },
+        "showCounter": {
+            "type": "boolean",
+            "default": false
+        },
+        "sortBy": {
+            "type": "string",
+            "default": "date",
+            "enum": ["date", "popularity", "rating", "price"]
+        },
+        "displayMode": {
+            "type": "string",
+            "default": "grid",
+            "enum": ["grid", "list", "carousel"]
+        }
+    },
+    "supports": {
+        "html": false,
+        "align": ["wide", "full"]
+    },
+    "editorScript": "file:./editor.js",
+    "editorStyle": "file:./editor.css",
+    "script": "file:./view.js",
+    "style": "file:./style.css"
+}

@@ -1,9 +1,10 @@
-( function( blocks, element, components, editor ) {
-    const { RichText, MediaUpload, InspectorControls } = editor;
-    const { createElement: el } = element;
-    const { PanelBody, RangeControl, Button } = components;
+( function() {
+    const { registerBlockType } = wp.blocks;
+    const { RichText, MediaUpload, InspectorControls } = wp.blockEditor;
+    const { createElement: el } = wp.element;
+    const { PanelBody, RangeControl, Button } = wp.components;
 
-    blocks.registerBlockType( 'modern-fse/testimonial', {
+    registerBlockType( 'modern-fse/testimonial', {
         title: 'Testimonial',
         icon: 'format-quote',
         category: 'design',
@@ -210,4 +211,4 @@
             );
         }
     } );
-} )( window.wp.blocks, window.wp.element, window.wp.components, window.wp.blockEditor );
+} )();

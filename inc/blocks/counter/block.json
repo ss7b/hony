@@ -1,6 +1,6 @@
 {
     "$schema": "https://schemas.wp.org/trunk/block.json",
-    "apiVersion": 2,
+    "apiVersion": 3,
     "name": "modern-fse/counter",
     "version": "1.0.0",
     "title": "Counter",
@@ -35,13 +35,9 @@
         }
     },
     "supports": {
-        "html": false,
-        "align": true,
-        "spacing": true,
-        "color": true,
-        "typography": true
+        "html": false
     },
     "editorScript": "file:./editor.js",
-    "script": "file:./view.js",
+    "editorStyle": "file:./editor.css",
     "style": "file:./style.css"
 }
