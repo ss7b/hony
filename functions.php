@@ -160,6 +160,9 @@ function modern_fse_theme_scripts() {
 		MODERN_FSE_THEME_VERSION,
 		true
 	);
+	 // swiper
+    wp_enqueue_style('swiper', 'https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css', array(), '12.0.0');
+	wp_enqueue_script('swiper', 'https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js', array(), '12.0.0', true);   
 }
 add_action( 'wp_enqueue_scripts', 'modern_fse_theme_scripts' );
 
@@ -207,9 +210,7 @@ function modern_fse_include_files() {
         '/inc/patterns/contact.php', // أنماط الاتصال
         '/inc/patterns/cta.php',     // أنماط الدعوة للإجراء
         '/inc/patterns/footer.php',  // أنماط الفوتر
-    );
-    
-    foreach ( $includes as $file ) {
+    );    foreach ( $includes as $file ) {
         $file_path = MODERN_FSE_THEME_PATH . $file;
         if ( file_exists( $file_path ) ) {
             require_once $file_path;

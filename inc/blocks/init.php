@@ -23,7 +23,8 @@ function modern_fse_register_all_blocks()
         'counter',
         'progress-bar',
         'social-icons',
-        'product-category-grid'
+        'product-category-grid',
+        'products-swiper'
     );
 
     foreach ($blocks as $block_name) {
@@ -51,12 +52,210 @@ function modern_fse_register_single_block($block_name)
         register_block_type($block_path . '/block.json', array(
             'render_callback' => 'modern_fse_render_product_category_grid',
         ));
+    } elseif ($block_name === 'products-swiper') {
+        register_block_type($block_path . '/block.json', array(
+            'render_callback' => 'modern_fse_render_products_swiper',
+        ));
     } else {
         register_block_type($block_path . '/block.json');
     }
 
     // تسجيل النصوص الإضافية للواجهة الأمامية
     modern_fse_enqueue_block_frontend_assets($block_name, $block_path, $block_url);
+}
+
+/**
+ * Render callback for Products Swiper Block
+ */
+function modern_fse_render_products_swiper($attributes, $content)
+{
+    ob_start();
+
+    // Check if WooCommerce is active
+    if (!class_exists('WooCommerce')) {
+        echo '<div class="notice notice-warning"><p>يتطلب هذا البلوك إضافة WooCommerce</p></div>';
+        return ob_get_clean();
+    }
+
+    // Get attributes with defaults
+    $product_type = isset($attributes['productType']) ? $attributes['productType'] : 'recent';
+    $product_category = isset($attributes['productCategory']) ? $attributes['productCategory'] : 0;
+    $limit = isset($attributes['limit']) ? intval($attributes['limit']) : 8;
+    $columns = isset($attributes['columns']) ? intval($attributes['columns']) : 3;
+    $image_size = isset($attributes['imageSize']) ? $attributes['imageSize'] : 'medium';
+    $show_title = isset($attributes['showTitle']) ? boolval($attributes['showTitle']) : true;
+    $show_description = isset($attributes['showDescription']) ? boolval($attributes['showDescription']) : false;
+    $description_length = isset($attributes['descriptionLength']) ? intval($attributes['descriptionLength']) : 20;
+    $show_rating = isset($attributes['showRating']) ? boolval($attributes['showRating']) : true;
+    $show_price = isset($attributes['showPrice']) ? boolval($attributes['showPrice']) : true;
+    $show_add_to_cart = isset($attributes['showAddToCart']) ? boolval($attributes['showAddToCart']) : true;
+    $card_style = isset($attributes['cardStyle']) ? $attributes['cardStyle'] : 'standard';
+    $autoplay = isset($attributes['autoPlay']) ? boolval($attributes['autoPlay']) : true;
+    $autoplay_speed = isset($attributes['autoPlaySpeed']) ? intval($attributes['autoPlaySpeed']) : 5000;
+    $slide_speed = isset($attributes['slideSpeed']) ? intval($attributes['slideSpeed']) : 800;
+    $show_arrows = isset($attributes['showArrows']) ? boolval($attributes['showArrows']) : true;
+    $show_dots = isset($attributes['showDots']) ? boolval($attributes['showDots']) : true;
+    $space_between = isset($attributes['spaceBetween']) ? intval($attributes['spaceBetween']) : 20;
+    $loop = isset($attributes['loop']) ? boolval($attributes['loop']) : true;
+    $custom_css = isset($attributes['customCSS']) ? sanitize_text_field($attributes['customCSS']) : '';
+
+    // Build WooCommerce query arguments
+    $args = array(
+        'post_type' => 'product',
+        'posts_per_page' => $limit,
+        'orderby' => 'date',
+        'order' => 'DESC',
+    );
+
+    // Filter by product type
+    if ($product_type === 'best_selling') {
+        $args['orderby'] = 'meta_value_num';
+        $args['meta_key'] = 'total_sales';
+        $args['order'] = 'DESC';
+    } elseif ($product_type === 'category' && $product_category > 0) {
+        $args['tax_query'] = array(
+            array(
+                'taxonomy' => 'product_cat',
+                'field' => 'term_id',
+                'terms' => $product_category,
+            ),
+        );
+    }
+
+    $query = new WP_Query($args);
+
+    if (!$query->have_posts()) {
+        echo '<p class="no-products-found">لم يتم العثور على منتجات</p>';
+        return ob_get_clean();
+    }
+
+    // Unique ID for this block instance
+    $block_id = 'products-swiper-' . uniqid();
+
+    ?>
+    <div class="products-swiper-block" id="<?php echo esc_attr($block_id); ?>">
+        <div class="swiper-container" 
+             data-autoplay="<?php echo esc_attr($autoplay ? 'true' : 'false'); ?>"
+             data-autoplay-speed="<?php echo esc_attr($autoplay_speed); ?>"
+             data-slide-speed="<?php echo esc_attr($slide_speed); ?>"
+             data-show-arrows="<?php echo esc_attr($show_arrows ? 'true' : 'false'); ?>"
+             data-show-dots="<?php echo esc_attr($show_dots ? 'true' : 'false'); ?>"
+             data-space-between="<?php echo esc_attr($space_between); ?>"
+             data-loop="<?php echo esc_attr($loop ? 'true' : 'false'); ?>"
+             data-columns="<?php echo esc_attr($columns); ?>"
+             <?php if (!empty($custom_css)): ?>
+                data-custom-css="<?php echo esc_attr($custom_css); ?>"
+             <?php endif; ?>>
+            
+            <div class="swiper-wrapper">
+                <?php
+                while ($query->have_posts()) {
+                    $query->the_post();
+                    $product = wc_get_product(get_the_ID());
+                    $product_id = get_the_ID();
+
+                    if (!$product) {
+                        continue;
+                    }
+
+                    // Get product image
+                    $image_url = has_post_thumbnail($product_id)
+                        ? get_the_post_thumbnail_url($product_id, $image_size)
+                        : wc_placeholder_img_src();
+                    ?>
+
+                    <div class="swiper-slide">
+                        <div class="product-card card-style-<?php echo esc_attr($card_style); ?>">
+                            
+                            <div class="product-image">
+                                <a href="<?php echo esc_url(get_the_permalink($product_id)); ?>">
+                                    <img src="<?php echo esc_url($image_url); ?>" 
+                                         alt="<?php echo esc_attr(get_the_title($product_id)); ?>"
+                                         loading="lazy">
+                                </a>
+                            </div>
+
+                            <div class="product-info">
+                                <?php if ($show_title): ?>
+                                    <a href="<?php echo esc_url(get_the_permalink($product_id)); ?>" class="product-title">
+                                        <?php echo esc_html(get_the_title($product_id)); ?>
+                                    </a>
+                                <?php endif; ?>
+
+                                <?php if ($show_price): ?>
+                                    <div class="product-price">
+                                        <?php echo wp_kses_post($product->get_price_html()); ?>
+                                    </div>
+                                <?php endif; ?>
+
+                                <?php if ($show_rating && function_exists('wc_get_rating_html')): ?>
+                                    <div class="product-rating">
+                                        <?php echo wp_kses_post(wc_get_rating_html($product->get_average_rating(), $product->get_review_count())); ?>
+                                    </div>
+                                <?php endif; ?>
+
+                                <?php if ($show_description && !empty(get_the_excerpt($product_id))): ?>
+                                    <p class="product-description">
+                                        <?php echo esc_html(wp_trim_words(get_the_excerpt($product_id), $description_length)); ?>
+                                    </p>
+                                <?php endif; ?>
+
+                                <?php if ($show_add_to_cart): ?>
+                                    <div class="product-actions">
+                                        <?php
+                                        echo apply_filters(
+                                            'woocommerce_loop_add_to_cart_link',
+                                            sprintf(
+                                                '<a href="%s" data-quantity="%s" class="%s" %s>%s</a>',
+                                                esc_url($product->add_to_cart_url()),
+                                                esc_attr(isset($quantity) ? $quantity : 1),
+                                                esc_attr(implode(' ', array_filter(array(
+                                                    'button',
+                                                    'product_type_' . $product->get_type(),
+                                                    $product->is_purchasable() && $product->is_in_stock() ? 'add_to_cart_button' : '',
+                                                    $product->supports('ajax_add_to_cart') ? 'ajax_add_to_cart' : '',
+                                                    'add-to-cart-btn'
+                                                )))),
+                                                $product->supports('ajax_add_to_cart') ? apply_filters('woocommerce_product_add_to_cart_handler', 'ajax', $product) : '',
+                                                esc_html($product->add_to_cart_text())
+                                            ),
+                                            $product
+                                        );
+                                        ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <?php
+                }
+                wp_reset_postdata();
+                ?>
+            </div>
+
+            <?php if ($show_arrows): ?>
+                <button class="swiper-prev" aria-label="المنتج السابق">‹</button>
+                <button class="swiper-next" aria-label="المنتج التالي">›</button>
+            <?php endif; ?>
+        </div>
+
+        <?php if ($show_dots): ?>
+            <div class="swiper-pagination"></div>
+        <?php endif; ?>
+
+        <?php if (!empty($custom_css)): ?>
+            <style id="products-swiper-custom-css-<?php echo esc_attr($block_id); ?>">
+                #<?php echo esc_attr($block_id); ?> {
+                    <?php echo wp_kses_post($custom_css); ?>
+                }
+            </style>
+        <?php endif; ?>
+    </div>
+
+    <?php
+
+    return ob_get_clean();
 }
 
 /**
@@ -281,7 +480,8 @@ function modern_fse_enqueue_block_assets()
         'counter',
         'progress-bar',
         'social-icons',
-        'product-category-grid'
+        'product-category-grid',
+        'products-swiper'
     );
 
     foreach ($blocks as $block_name) {
@@ -300,6 +500,32 @@ function modern_fse_enqueue_block_assets()
             wp_enqueue_style('modern-fse-' . $block_name . '-style');
         }
     }
+
+    // تحميل Swiper إذا كان البلوك الجديد مستخدماً
+    global $post;
+    if ($post && has_block('modern-fse/products-swiper', $post->ID)) {
+        if (!wp_script_is('swiper', 'registered')) {
+            wp_register_script(
+                'swiper',
+                'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js',
+                array(),
+                '11.0.0',
+                true
+            );
+        }
+
+        if (!wp_style_is('swiper', 'registered')) {
+            wp_register_style(
+                'swiper',
+                'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css',
+                array(),
+                '11.0.0'
+            );
+        }
+
+        wp_enqueue_script('swiper');
+        wp_enqueue_style('swiper');
+    }
 }
 add_action('wp_enqueue_scripts', 'modern_fse_enqueue_block_assets');
 
@@ -315,7 +541,8 @@ function modern_fse_enqueue_block_editor_assets()
         'counter',
         'progress-bar',
         'social-icons',
-        'product-category-grid'
+        'product-category-grid',
+        'products-swiper'
     );
 
     foreach ($blocks as $block_name) {
@@ -409,6 +636,12 @@ function modern_fse_get_available_blocks()
             'name' => 'Product Category Grid',
             'description' => 'عرض شبكة فئات المنتجات',
             'icon' => 'grid-view',
+            'category' => 'woocommerce'
+        ),
+        'products-swiper' => array(
+            'name' => 'Products Swiper',
+            'description' => 'عرض المنتجات في Swiper مع خيارات متقدمة',
+            'icon' => 'carousel',
             'category' => 'woocommerce'
         )
     );

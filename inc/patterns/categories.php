@@ -419,10 +419,10 @@ function modern_fse_register_categories_featured_shop() {
             <!-- wp:column -->
             <div class="wp-block-column">
                 <!-- wp:cover {"url":"' . esc_url( get_template_directory_uri() ) . '/assets/images/category-electronics-large.jpg","dimRatio":50,"isDark":false,"style":{"spacing":{"padding":{"top":"var:preset|spacing|xxxl","bottom":"var:preset|spacing|xxxl"}}},"layout":{"type":"constrained"}} -->
-                <div class="wp-block-cover is-light" style="padding-top:var(--wp--preset--spacing--xxxl);padding-bottom:var(--wp--preset--spacing--xxxl)"><span aria-hidden="true" class="wp-block-cover__background has-background-dim-50 has-background-dim"></span><div class="wp-block-cover__inner-container" >
+                <div class="wp-block-cover is-light" style="padding-top:var(--wp--preset--spacing--xxxl);padding-bottom:var(--wp--preset--spacing--xxxl)"><span aria-hidden="true" class="wp-block-cover__background has-background-dim-50 has-background-dim"></span><div class="wp-block-cover__inner-container">
                     
                     <!-- wp:heading {"textAlign":"center","level":3,"style":{"color":{"text":"#ffffff"}}} -->
-                    <h3 class="wp-block-heading has-text-align-center has-text-color" style="color:#ffffff;">الإلكترونيات</h3>
+                    <h3 class="wp-block-heading has-text-align-center has-text-color" style="color:#ffffff">الإلكترونيات</h3>
                     <!-- /wp:heading -->
                     
                     <!-- wp:paragraph {"align":"center","style":{"color":{"text":"#ffffff"}}} -->

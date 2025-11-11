@@ -67,7 +67,7 @@
         background: white !important;
         color: black !important;
     }
-    
+
     .is-style-creative .wp-block-button__link,
     .is-style-warm-cozy .wp-block-button__link {
         background: #000000 !important;
@@ -75,6 +75,148 @@
         border: 1px solid #000000 !important;
     }
 }
-.has-text-align-center{
+
+.has-text-align-center {
     text-align: center;
 }
+
+/* تنسيق حاوية المنتج */
+.wp-block-woocommerce-product-image {
+    position: relative;
+    overflow: hidden;
+}
+
+/* إخفاء أزرار الهوفر افتراضيًا */
+.product-hover-buttons {
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+/* إظهار أزرار الهوفر عند التمرير */
+.wp-block-woocommerce-product-image:hover .product-hover-buttons {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* تأثير تغطية الصورة عند الهوفر */
+.wp-block-woocommerce-product-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.wp-block-woocommerce-product-image:hover::before {
+    opacity: 1;
+}
+
+/* تحسين مظهر الأزرار */
+.product-hover-buttons .wp-block-button__link {
+    border: 2px solid !important;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    width: 100%;
+    text-align: center;
+}
+
+.product-hover-buttons .wp-block-button__link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* تنسيق شارة البيع */
+.wc-block-components-product-sale-badge {
+    background: var(--wp--preset--color--primary) !important;
+    color: white !important;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    z-index: 2;
+}
+
+/* تنسيق حاوية المنتج */
+.wp-block-woocommerce-product-image.product-image-hover {
+    position: relative;
+    overflow: hidden;
+}
+
+/* إخفاء أزرار الهوفر افتراضيًا */
+.product-hover-buttons {
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+/* إظهار أزرار الهوفر عند التمرير */
+.product-item-wrapper:hover .product-hover-buttons {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* تأثير تغطية الصورة عند الهوفر */
+.wp-block-woocommerce-product-image.product-image-hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.product-item-wrapper:hover .wp-block-woocommerce-product-image.product-image-hover::before {
+    opacity: 1;
+}
+
+/* تحسين مظهر الأزرار */
+.product-hover-buttons .wp-block-button__link {
+    border: 2px solid !important;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    width: 100%;
+    text-align: center;
+    display: block;
+}
+
+.product-hover-buttons .wp-block-button__link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* تنسيق شارة البيع */
+.wc-block-components-product-sale-badge {
+    background: var(--wp--preset--color--primary) !important;
+    color: white !important;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    z-index: 2;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+/* تحسين تخطيط العناصر */
+.product-item-wrapper {
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.product-item-wrapper:hover {
+    transform: translateY(-5px);
+}
+/* swiper */

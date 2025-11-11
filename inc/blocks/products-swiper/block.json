@@ -1,0 +1,102 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "modern-fse/products-swiper",
+    "version": "1.0.0",
+    "title": "Products Swiper",
+    "category": "woocommerce",
+    "description": "عرض المنتجات في Swiper مع خيارات متقدمة للفرز والتصميم",
+    "textdomain": "modern-fse-theme",
+    "attributes": {
+        "productType": {
+            "type": "string",
+            "default": "recent"
+        },
+        "productCategory": {
+            "type": "number",
+            "default": 0
+        },
+        "limit": {
+            "type": "number",
+            "default": 8
+        },
+        "columns": {
+            "type": "number",
+            "default": 3
+        },
+        "imageSize": {
+            "type": "string",
+            "default": "medium"
+        },
+        "showTitle": {
+            "type": "boolean",
+            "default": true
+        },
+        "showDescription": {
+            "type": "boolean",
+            "default": false
+        },
+        "descriptionLength": {
+            "type": "number",
+            "default": 20
+        },
+        "showRating": {
+            "type": "boolean",
+            "default": true
+        },
+        "showPrice": {
+            "type": "boolean",
+            "default": true
+        },
+        "showAddToCart": {
+            "type": "boolean",
+            "default": true
+        },
+        "cardStyle": {
+            "type": "string",
+            "default": "standard"
+        },
+        "autoPlay": {
+            "type": "boolean",
+            "default": true
+        },
+        "autoPlaySpeed": {
+            "type": "number",
+            "default": 5000
+        },
+        "slideSpeed": {
+            "type": "number",
+            "default": 800
+        },
+        "showArrows": {
+            "type": "boolean",
+            "default": true
+        },
+        "showDots": {
+            "type": "boolean",
+            "default": true
+        },
+        "spaceBetween": {
+            "type": "number",
+            "default": 20
+        },
+        "loop": {
+            "type": "boolean",
+            "default": true
+        },
+        "customCSS": {
+            "type": "string",
+            "default": ""
+        }
+    },
+    "supports": {
+        "html": false,
+        "align": ["wide", "full"],
+        "spacing": {},
+        "color": {},
+        "typography": {}
+    },
+    "editorScript": "file:./editor.js",
+    "script": "file:./view.js",
+    "style": "file:./style.css"
+}

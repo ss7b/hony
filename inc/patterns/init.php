@@ -9,3 +9,5 @@ require_once get_template_directory() . '/inc/patterns/header.php';
 require_once get_template_directory() . '/inc/patterns/pricing.php';
 require_once get_template_directory() . '/inc/patterns/team.php';
 require_once get_template_directory() . '/inc/patterns/testimonials.php';
+require_once get_template_directory() . '/inc/patterns/products.php';
+require_once get_template_directory() . '/inc/patterns/banners.php';
