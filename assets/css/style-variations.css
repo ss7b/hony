@@ -75,3 +75,6 @@
         border: 1px solid #000000 !important;
     }
 }
+.has-text-align-center{
+    text-align: center;
+}

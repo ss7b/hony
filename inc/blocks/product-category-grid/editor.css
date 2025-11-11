@@ -1,0 +1,112 @@
+/* Editor Styles for Product Category Grid */
+.wp-block-modern-fse-product-category-grid .category-grid-preview {
+    border: 2px dashed #d1d5db;
+    border-radius: 8px;
+    padding: 20px;
+    background: #f9fafb;
+    margin: 10px 0;
+}
+
+.wp-block-modern-fse-product-category-grid .preview-title {
+    text-align: center;
+    color: #6b7280;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.wp-block-modern-fse-product-category-grid .editor-grid {
+    display: grid;
+    gap: 20px;
+}
+
+.wp-block-modern-fse-product-category-grid .editor-grid.columns-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.wp-block-modern-fse-product-category-grid .editor-grid.columns-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.wp-block-modern-fse-product-category-grid .editor-grid.columns-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.wp-block-modern-fse-product-category-grid .editor-grid.columns-5 {
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.wp-block-modern-fse-product-category-grid .editor-grid.columns-6 {
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.wp-block-modern-fse-product-category-grid .category-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+}
+
+.wp-block-modern-fse-product-category-grid .preview-image {
+    background: #f3f4f6;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wp-block-modern-fse-product-category-grid .image-placeholder {
+    font-size: 2em;
+    opacity: 0.5;
+}
+
+.wp-block-modern-fse-product-category-grid .category-content {
+    padding: 15px;
+    text-align: center;
+}
+
+.wp-block-modern-fse-product-category-grid .category-name {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: #374151;
+}
+
+.wp-block-modern-fse-product-category-grid .category-description {
+    font-size: 12px;
+    color: #6b7280;
+    margin: 0 0 10px 0;
+    line-height: 1.4;
+}
+
+.wp-block-modern-fse-product-category-grid .category-count {
+    background: #dbeafe;
+    color: #1e40af;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+/* Responsive in editor */
+@media (max-width: 1024px) {
+    .wp-block-modern-fse-product-category-grid .editor-grid.columns-4,
+    .wp-block-modern-fse-product-category-grid .editor-grid.columns-5,
+    .wp-block-modern-fse-product-category-grid .editor-grid.columns-6 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .wp-block-modern-fse-product-category-grid .editor-grid.columns-3,
+    .wp-block-modern-fse-product-category-grid .editor-grid.columns-4,
+    .wp-block-modern-fse-product-category-grid .editor-grid.columns-5,
+    .wp-block-modern-fse-product-category-grid .editor-grid.columns-6 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .wp-block-modern-fse-product-category-grid .editor-grid {
+        grid-template-columns: 1fr !important;
+    }
+}

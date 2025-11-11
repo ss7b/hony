@@ -1,0 +1,82 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "modern-fse/product-category-grid",
+    "version": "1.1.0",
+    "title": "Product Category Grid",
+    "category": "woocommerce",
+    "description": "عرض شبكة فئات المنتجات بشكل شبكة أو سلايدر مع خيارات تصميم متعددة",
+    "textdomain": "modern-fse-theme",
+    "attributes": {
+        "layoutType": {
+            "type": "string",
+            "default": "grid"
+        },
+        "columns": {
+            "type": "number",
+            "default": 4
+        },
+        "limit": {
+            "type": "number",
+            "default": 8
+        },
+        "orderby": {
+            "type": "string",
+            "default": "name"
+        },
+        "order": {
+            "type": "string",
+            "default": "asc"
+        },
+        "showCount": {
+            "type": "boolean",
+            "default": true
+        },
+        "showDescription": {
+            "type": "boolean",
+            "default": false
+        },
+        "imageSize": {
+            "type": "string",
+            "default": "medium"
+        },
+        "cardStyle": {
+            "type": "string",
+            "default": "normal"
+        },
+        "textPosition": {
+            "type": "string",
+            "default": "below"
+        },
+        "autoPlay": {
+            "type": "boolean",
+            "default": true
+        },
+        "autoPlaySpeed": {
+            "type": "number",
+            "default": 3000
+        },
+        "showArrows": {
+            "type": "boolean",
+            "default": true
+        },
+        "showDots": {
+            "type": "boolean",
+            "default": true
+        },
+        "sliderSpeed": {
+            "type": "number",
+            "default": 500
+        }
+    },
+    "supports": {
+        "html": false,
+        "align": ["wide", "full"],
+        "spacing": true,
+        "color": true,
+        "typography": true
+    },
+    "editorScript": "file:./editor.js",
+    "script": "file:./view.js",
+    "style": "file:./style.css"
+}

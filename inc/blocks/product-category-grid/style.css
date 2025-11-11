@@ -1,0 +1,436 @@
+/* Product Category Grid Block Styles */
+.product-category-grid-block {
+    width: 100%;
+    margin: 2rem 0;
+    position: relative;
+}
+
+/* Grid Layout */
+.categories-grid {
+    display: grid;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.categories-grid.columns-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.categories-grid.columns-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.categories-grid.columns-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.categories-grid.columns-5 {
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.categories-grid.columns-6 {
+    grid-template-columns: repeat(6, 1fr);
+}
+
+/* Slider Layout */
+.categories-slider {
+    position: relative;
+    overflow: hidden;
+    margin: 2rem 0;
+}
+
+.slider-container {
+    display: flex;
+    transition: transform 0.5s ease;
+    gap: 2rem;
+}
+
+.slider-item {
+    flex: 0 0 calc(100% / var(--columns, 4));
+    min-width: 0;
+}
+
+/* Slider Controls */
+.slider-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    gap: 1rem;
+}
+
+.slider-arrows {
+    display: flex;
+    gap: 1rem;
+}
+
+.slider-arrow {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    border: 2px solid var(--wp--preset--color--primary-500);
+    background: var(--wp--preset--color--white);
+    color: var(--wp--preset--color--primary-500);
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.slider-arrow:hover {
+    background: var(--wp--preset--color--primary-500);
+    color: var(--wp--preset--color--white);
+}
+
+.slider-arrow:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.slider-dots {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.slider-dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    background: var(--wp--preset--color--secondary-300);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.slider-dot.active {
+    background: var(--wp--preset--color--primary-500);
+    transform: scale(1.2);
+}
+
+/* Card Styles */
+.category-card {
+    background: var(--wp--preset--color--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--wp--preset--shadow--medium);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    position: relative;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--wp--preset--shadow--large);
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Circular Card Style */
+.category-card.card-style-circular {
+    border-radius: 50%;
+    width: 250px;
+    height: 250px;
+    max-width: 100%;
+    max-height: 100%;
+    margin: 0 auto;
+}
+
+.category-card.card-style-circular .category-image {
+    border-radius: 50%;
+}
+
+.category-card.card-style-circular .category-content {
+    border-radius: 50%;
+}
+
+/* Square Card Style */
+.category-card.card-style-square {
+    border-radius: 0;
+}
+
+.category-card.card-style-square .category-image {
+    border-radius: 0;
+}
+
+/* Image Styles */
+.category-image {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1/1;
+        background: linear-gradient(transparent, rgba(0,0,0,0.8));
+}
+
+.category-card.card-style-circular .category-image {
+    border-radius: 50%;
+}
+
+.category-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.category-card:hover .category-image img {
+    transform: scale(1.05);
+}
+
+/* Content Styles */
+.category-content {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+/* Overlay Text Position */
+.category-card.text-overlay .category-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: var(--wp--preset--color--white);
+    padding: 2rem 1.5rem 1.5rem;
+    text-align: center;
+}
+
+.category-card.text-overlay .category-name {
+    color: var(--wp--preset--color--white);
+}
+
+.category-card.text-overlay .category-description {
+    color: var(--wp--preset--color--white);
+    opacity: 0.9;
+}
+
+.category-card.text-overlay .category-count {
+    background: rgba(255,255,255,0.2);
+    color: var(--wp--preset--color--white);
+    backdrop-filter: blur(10px);
+}
+
+/* Content Elements */
+.category-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--wp--preset--color--secondary-800);
+    margin: 0 0 0.5rem 0;
+}
+
+.category-card.card-style-circular .category-name {
+    font-size: 1.1rem;
+}
+
+.category-description {
+    font-size: 0.9rem;
+    color: var(--wp--preset--color--secondary-600);
+    margin: 0 0 1rem 0;
+    line-height: 1.5;
+}
+
+.category-count {
+    display: inline-block;
+    background: var(--wp--preset--color--primary-100);
+    color: var(--wp--preset--color--primary-600);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+/* Editor Preview Styles */
+.category-grid-preview {
+    padding: 1rem;
+    border: 2px dashed var(--wp--preset--color--secondary-300);
+    border-radius: 8px;
+    background: var(--wp--preset--color--secondary-50);
+}
+
+.preview-title {
+    text-align: center;
+    color: var(--wp--preset--color--secondary-600);
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+}
+
+/* Editor Grid Preview */
+.editor-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.editor-grid.columns-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.editor-grid.columns-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.editor-grid.columns-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.editor-grid.columns-5 {
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.editor-grid.columns-6 {
+    grid-template-columns: repeat(6, 1fr);
+}
+
+/* Editor Slider Preview */
+.editor-slider {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    padding: 1rem 0;
+}
+
+.editor-slider .category-card {
+    flex: 0 0 calc(100% / var(--columns, 4) - 1rem);
+    min-width: 200px;
+}
+
+.slider-controls-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.slider-arrows-preview {
+    display: flex;
+    gap: 1rem;
+}
+
+.slider-arrow {
+    background: var(--wp--preset--color--secondary-200);
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.slider-dots-preview {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.slider-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--wp--preset--color--secondary-300);
+}
+
+.slider-dot.active {
+    background: var(--wp--preset--color--primary-500);
+}
+
+/* Preview Elements */
+.editor-grid .category-card,
+.editor-slider .category-card {
+    pointer-events: none;
+}
+
+.preview-image {
+    background: var(--wp--preset--color--secondary-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-placeholder {
+    font-size: 2rem;
+    opacity: 0.5;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .categories-grid.columns-4,
+    .categories-grid.columns-5,
+    .categories-grid.columns-6 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .slider-item {
+        flex: 0 0 calc(100% / 3);
+    }
+}
+
+@media (max-width: 768px) {
+    .categories-grid.columns-3,
+    .categories-grid.columns-4,
+    .categories-grid.columns-5,
+    .categories-grid.columns-6 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .slider-item {
+        flex: 0 0 calc(100% / 2);
+    }
+    
+    .category-content {
+        padding: 1rem;
+    }
+    
+    .category-name {
+        font-size: 1.1rem;
+    }
+    
+    .category-card.card-style-circular {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .categories-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem;
+    }
+    
+    .slider-item {
+        flex: 0 0 100%;
+    }
+    
+    .category-card.card-style-circular {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .slider-controls {
+        flex-direction: column;
+    }
+}
+
+/* Empty State */
+.categories-grid:empty::before,
+.categories-slider:empty::before {
+    content: "لم يتم العثور على فئات منتجات";
+    text-align: center;
+    color: var(--wp--preset--color--secondary-500);
+    padding: 2rem;
+    grid-column: 1 / -1;
+}
+
+/* Loading State */
+.category-card.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.category-card.loading .category-image {
+    background: var(--wp--preset--color--secondary-200);
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
