@@ -10,8 +10,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-// تحميل معالج AJAX للبلوكات
-require_once get_template_directory() . '/inc/blocks/products-tabs/ajax-handler.php';
+// AJAX handler removed: products-tabs now renders all tabs server-side
 
 /**
  * تسجيل جميع البلوكات المخصصة
@@ -475,17 +474,7 @@ function modern_fse_enqueue_block_frontend_assets($block_name, $block_path, $blo
         );
     }
 
-    // Localize script للبلوكات التي تحتاج AJAX
-    if ($block_name === 'products-tabs' && wp_script_is('modern-fse-products-tabs-view', 'registered')) {
-        wp_localize_script(
-            'modern-fse-products-tabs-view',
-            'productsTabsAjax',
-            array(
-                'ajax_url' => admin_url('admin-ajax.php'),
-                'nonce' => wp_create_nonce('products_tabs_nonce')
-            )
-        );
-    }
+    // No AJAX localization needed for products-tabs (rendered server-side)
 }
 
 /**

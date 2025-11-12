@@ -106,6 +106,7 @@ function modern_fse_render_products_tabs($attributes, $content)
                 $active_class = ($index === 0) ? 'active' : '';
                 $product_type = isset($tab['type']) ? sanitize_key($tab['type']) : 'all';
                 $category_slug = isset($tab['categoryName']) ? sanitize_text_field($tab['categoryName']) : '';
+                $category_id = isset($tab['categoryId']) ? intval($tab['categoryId']) : 0;
 
                 // Data attributes for JS and AJAX fallback
                 $panel_data = sprintf(
@@ -130,18 +131,20 @@ function modern_fse_render_products_tabs($attributes, $content)
                 ?>
                 <div class="tab-panel <?php echo esc_attr($active_class); ?>" <?php echo $panel_data; ?>>
 
-                    <?php if ($index === 0): // render only first tab server-side (initial load)
-                        // Build query for first tab
-                        $args = array(
-                            'post_type' => 'product',
-                            'posts_per_page' => $limit,
-                        );
+                    <?php
+                    // Build query for this tab
+                    $args = array(
+                        'post_type' => 'product',
+                        'posts_per_page' => $limit,
+                    );
 
-                        if ($product_type === 'best_selling') {
-                            $args['orderby'] = 'meta_value_num';
-                            $args['meta_key'] = 'total_sales';
-                            $args['order'] = 'DESC';
-                        } elseif ($product_type === 'category' && !empty($category_slug)) {
+                    if ($product_type === 'best_selling') {
+                        $args['orderby'] = 'meta_value_num';
+                        $args['meta_key'] = 'total_sales';
+                        $args['order'] = 'DESC';
+                    } elseif ($product_type === 'category') {
+                        // try slug first
+                        if (!empty($category_slug)) {
                             $category = get_term_by('slug', $category_slug, 'product_cat');
                             if ($category && !is_wp_error($category)) {
                                 $args['tax_query'] = array(
@@ -154,68 +157,75 @@ function modern_fse_render_products_tabs($attributes, $content)
                             }
                         }
 
-                        $query = new WP_Query($args);
-
-                        if ($query->have_posts()) {
-                            echo '<div class="products-grid" style="grid-template-columns: repeat(' . esc_attr($columns) . ', 1fr);">';
-                            while ($query->have_posts()) {
-                                $query->the_post();
-                                $product = wc_get_product(get_the_ID());
-                                $product_id = get_the_ID();
-                                if (!$product) continue;
-
-                                $image_url = has_post_thumbnail($product_id) ? get_the_post_thumbnail_url($product_id, $image_size) : wc_placeholder_img_src();
-                                $is_on_sale = $product->is_on_sale();
-                                $badge_text = '';
-                                if ($is_on_sale && $show_badge) {
-                                    $regular_price = $product->get_regular_price();
-                                    $sale_price = $product->get_sale_price();
-                                    if ($regular_price && $sale_price) {
-                                        $discount = round((($regular_price - $sale_price) / $regular_price) * 100);
-                                        $badge_text = '-' . $discount . '%';
-                                    }
-                                }
-
-                                ?>
-                                <div class="product-card card-style-<?php echo esc_attr($card_style); ?>">
-                                    <div class="product-image">
-                                        <a href="<?php echo esc_url(get_the_permalink($product_id)); ?>" title="<?php echo esc_attr(get_the_title($product_id)); ?>">
-                                            <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr(get_the_title($product_id)); ?>" loading="lazy">
-                                        </a>
-                                        <?php if ($is_on_sale && !empty($badge_text) && $show_badge): ?>
-                                            <span class="product-badge"><?php echo esc_html($badge_text); ?></span>
-                                        <?php endif; ?>
-                                    </div>
-                                    <div class="product-info">
-                                        <?php if ($show_title): ?>
-                                            <a href="<?php echo esc_url(get_the_permalink($product_id)); ?>" class="product-title"><?php echo esc_html(get_the_title($product_id)); ?></a>
-                                        <?php endif; ?>
-                                        <?php if ($show_price): ?>
-                                            <div class="product-price"><?php echo wp_kses_post($product->get_price_html()); ?></div>
-                                        <?php endif; ?>
-                                        <?php if ($show_rating && function_exists('wc_get_rating_html')): ?>
-                                            <div class="product-rating"><?php echo wp_kses_post(wc_get_rating_html($product->get_average_rating(), $product->get_review_count())); ?></div>
-                                        <?php endif; ?>
-                                        <?php if ($show_add_to_cart): ?>
-                                            <div class="product-actions">
-                                                <?php echo apply_filters('woocommerce_loop_add_to_cart_link', sprintf('<a href="%s" data-quantity="%s" class="%s" %s>%s</a>', esc_url($product->add_to_cart_url()), esc_attr(isset($quantity) ? $quantity : 1), esc_attr(implode(' ', array_filter(array('add-to-cart-btn','button','product_type_' . $product->get_type(), $product->is_purchasable() && $product->is_in_stock() ? 'add_to_cart_button' : '', $product->supports('ajax_add_to_cart') ? 'ajax_add_to_cart' : '',)))), $product->supports('ajax_add_to_cart') ? apply_filters('woocommerce_product_add_to_cart_handler', 'ajax', $product) : '', esc_html($product->add_to_cart_text())), $product); ?>
-                                            </div>
-                                        <?php endif; ?>
-                                    </div>
-                                </div>
-                                <?php
-                            }
-                            echo '</div>';
-                            wp_reset_postdata();
-                        } else {
-                            echo '<div class="empty-state"><div class="empty-state-icon">📦</div><p class="empty-state-text">' . __('لا توجد منتجات متاحة حالياً', 'modern-fse-theme') . '</p></div>';
+                        // fallback to category id
+                        if (empty($args['tax_query']) && $category_id > 0) {
+                            $args['tax_query'] = array(
+                                array(
+                                    'taxonomy' => 'product_cat',
+                                    'field' => 'term_id',
+                                    'terms' => $category_id,
+                                ),
+                            );
                         }
-                    else: // Render placeholder for tabs that will be loaded via AJAX
-                        ?>
-                        <div class="products-grid placeholder" style="min-height:150px;display:grid;place-items:center;">
-                            <div class="loading"><?php echo __('تحميل...', 'modern-fse-theme'); ?></div>
-                        </div>
-                    <?php endif; ?>
+                    }
+
+                    $query = new WP_Query($args);
+
+                    if ($query->have_posts()) {
+                        echo '<div class="products-grid" style="grid-template-columns: repeat(' . esc_attr($columns) . ', 1fr);">';
+                        while ($query->have_posts()) {
+                            $query->the_post();
+                            $product = wc_get_product(get_the_ID());
+                            $product_id = get_the_ID();
+                            if (!$product) continue;
+
+                            $image_url = has_post_thumbnail($product_id) ? get_the_post_thumbnail_url($product_id, $image_size) : wc_placeholder_img_src();
+                            $is_on_sale = $product->is_on_sale();
+                            $badge_text = '';
+                            if ($is_on_sale && $show_badge) {
+                                $regular_price = $product->get_regular_price();
+                                $sale_price = $product->get_sale_price();
+                                if ($regular_price && $sale_price) {
+                                    $discount = round((($regular_price - $sale_price) / $regular_price) * 100);
+                                    $badge_text = '-' . $discount . '%';
+                                }
+                            }
+
+                            ?>
+                            <div class="product-card card-style-<?php echo esc_attr($card_style); ?>">
+                                <div class="product-image">
+                                    <a href="<?php echo esc_url(get_the_permalink($product_id)); ?>" title="<?php echo esc_attr(get_the_title($product_id)); ?>">
+                                        <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr(get_the_title($product_id)); ?>" loading="lazy">
+                                    </a>
+                                    <?php if ($is_on_sale && !empty($badge_text) && $show_badge): ?>
+                                        <span class="product-badge"><?php echo esc_html($badge_text); ?></span>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="product-info">
+                                    <?php if ($show_title): ?>
+                                        <a href="<?php echo esc_url(get_the_permalink($product_id)); ?>" class="product-title"><?php echo esc_html(get_the_title($product_id)); ?></a>
+                                    <?php endif; ?>
+                                    <?php if ($show_price): ?>
+                                        <div class="product-price"><?php echo wp_kses_post($product->get_price_html()); ?></div>
+                                    <?php endif; ?>
+                                    <?php if ($show_rating && function_exists('wc_get_rating_html')): ?>
+                                        <div class="product-rating"><?php echo wp_kses_post(wc_get_rating_html($product->get_average_rating(), $product->get_review_count())); ?></div>
+                                    <?php endif; ?>
+                                    <?php if ($show_add_to_cart): ?>
+                                        <div class="product-actions">
+                                            <?php echo apply_filters('woocommerce_loop_add_to_cart_link', sprintf('<a href="%s" data-quantity="%s" class="%s" %s>%s</a>', esc_url($product->add_to_cart_url()), esc_attr(isset($quantity) ? $quantity : 1), esc_attr(implode(' ', array_filter(array('add-to-cart-btn','button','product_type_' . $product->get_type(), $product->is_purchasable() && $product->is_in_stock() ? 'add_to_cart_button' : '', $product->supports('ajax_add_to_cart') ? 'ajax_add_to_cart' : '',)))), $product->supports('ajax_add_to_cart') ? apply_filters('woocommerce_product_add_to_cart_handler', 'ajax', $product) : '', esc_html($product->add_to_cart_text())), $product); ?>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                        echo '</div>';
+                        wp_reset_postdata();
+                    } else {
+                        echo '<div class="empty-state"><div class="empty-state-icon">📦</div><p class="empty-state-text">' . __('لا توجد منتجات متاحة حالياً', 'modern-fse-theme') . '</p></div>';
+                    }
+                    ?>
 
 
 

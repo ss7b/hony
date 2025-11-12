@@ -33,8 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 void tabPanel.offsetWidth;
                 tabPanel.style.animation = `tabAnimation-${animationType} ${animationSpeed}ms ease-in-out`;
 
-                // تحميل المنتجات عبر AJAX
-                loadProductsViaAjax(block, button, tabPanel);
+                // No AJAX: all tabs are rendered server-side. Just activate the panel.
 
                 // Dispatch custom event
                 const event = new CustomEvent('tabChanged', {
@@ -44,100 +43,16 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Set first tab as active by default and load its products
+        // Set first tab as active by default
         if (tabButtons.length > 0) {
             tabButtons[0].classList.add('active');
             if (tabPanels.length > 0) {
                 tabPanels[0].classList.add('active');
-                // تحميل المنتجات للتبويب الأول (merge panel dataset with button dataset)
-                const initialButton = tabButtons[0];
-                const initialPanel = tabPanels[0];
-                loadProductsViaAjax(block, initialButton, initialPanel);
             }
         }
     });
 
-    /**
-     * تحميل المنتجات عبر AJAX
-     */
-    function loadProductsViaAjax(block, button, tabPanel) {
-        if (!tabPanel) tabPanel = block.querySelector('.tab-panel.active');
-        if (!tabPanel) return;
-
-        // إظهار مؤشر التحميل
-        const productsGrid = tabPanel.querySelector('.products-grid');
-        if (productsGrid) {
-            productsGrid.style.opacity = '0.6';
-            productsGrid.style.pointerEvents = 'none';
-        }
-
-        // read attributes (prefer button, fallback to panel, then block)
-        const tabIndex = parseInt(button && button.getAttribute ? (button.getAttribute('data-tab-index') || tabPanel.getAttribute('data-tab-index')) : (tabPanel.getAttribute('data-tab-index'))) || 0;
-        const tabType = (button && button.getAttribute ? (button.getAttribute('data-tab-type') || tabPanel.getAttribute('data-tab-type')) : (tabPanel.getAttribute('data-tab-type'))) || 'all';
-    const categorySlug = (button && button.getAttribute ? (button.getAttribute('data-category-slug') || tabPanel.getAttribute('data-category-slug')) : (tabPanel.getAttribute('data-category-slug'))) || '';
-    const categoryId = parseInt(button && button.getAttribute ? (button.getAttribute('data-category-id') || tabPanel.getAttribute('data-category-id')) : (tabPanel.getAttribute('data-category-id'))) || 0;
-        const limit = parseInt(block.getAttribute('data-limit') || block.dataset.limit) || 8;
-        const columns = parseInt(block.getAttribute('data-columns') || block.dataset.columns) || 4;
-        const imageSize = block.getAttribute('data-image-size') || block.dataset.imageSize || 'medium';
-        const showTitle = block.getAttribute('data-show-title') || block.dataset.showTitle || 'true';
-        const showPrice = block.getAttribute('data-show-price') || block.dataset.showPrice || 'true';
-        const showRating = block.getAttribute('data-show-rating') || block.dataset.showRating || 'true';
-        const showAddToCart = block.getAttribute('data-show-add-to-cart') || block.dataset.showAddToCart || 'true';
-        const showBadge = block.getAttribute('data-show-badge') || block.dataset.showBadge || 'true';
-        const cardStyle = block.getAttribute('data-card-style') || block.dataset.cardStyle || 'hover-lift';
-        const sortBy = block.getAttribute('data-sort-by') || block.dataset.sortBy || 'date';
-
-        const formData = new FormData();
-        formData.append('action', 'load_products_tab');
-        formData.append('nonce', productsTabsAjax.nonce);
-        formData.append('tab_index', tabIndex);
-        formData.append('tab_type', tabType);
-        formData.append('category_slug', categorySlug);
-    formData.append('category_id', categoryId);
-        formData.append('limit', limit);
-        formData.append('columns', columns);
-        formData.append('image_size', imageSize);
-        formData.append('show_title', showTitle);
-        formData.append('show_price', showPrice);
-        formData.append('show_rating', showRating);
-        formData.append('show_add_to_cart', showAddToCart);
-        formData.append('show_badge', showBadge);
-        formData.append('card_style', cardStyle);
-        formData.append('sort_by', sortBy);
-
-        // Request debug removed for production
-
-        fetch(productsTabsAjax.ajax_url, {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success && data.data.html) {
-                // إستبدال المحتوى
-                tabPanel.innerHTML = data.data.html;
-                
-                // إعادة تفعيل الـ WooCommerce scripts
-                if (typeof jQuery !== 'undefined' && jQuery.fn.wc_cart_fragments) {
-                    jQuery(document.body).trigger('wc_fragments_loaded');
-                }
-
-                // إزالة مؤشر التحميل
-                if (productsGrid) {
-                    productsGrid.style.opacity = '1';
-                    productsGrid.style.pointerEvents = 'auto';
-                }
-            }
-        })
-        .catch(error => {
-            console.error('Error loading products:', error);
-            // إزالة مؤشر التحميل في حالة الخطأ
-            if (productsGrid) {
-                productsGrid.style.opacity = '1';
-                productsGrid.style.pointerEvents = 'auto';
-            }
-        });
-    }
+    // No AJAX loading function required when all tabs are rendered server-side.
 
     // Smooth scroll to products on tab change
     document.addEventListener('tabChanged', function(e) {
