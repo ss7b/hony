@@ -9,6 +9,24 @@ document.addEventListener('DOMContentLoaded', function() {
 		});
 	});
 
+	// View mode toggle buttons (Grid and List options)
+	const viewModeButtons = document.querySelectorAll('.view-mode-toggle button');
+	viewModeButtons.forEach(button => {
+		button.addEventListener('click', function(e) {
+			e.preventDefault();
+			const viewMode = this.dataset.viewMode;
+			updateViewMode(viewMode);
+		});
+	});
+
+	// Mobile show select dropdown
+	const showSelect = document.querySelector('.mobile-show-control select');
+	if (showSelect) {
+		showSelect.addEventListener('change', function() {
+			updateProductsDisplay(parseInt(this.value));
+		});
+	}
+
 	// Sort dropdown
 	const sortSelect = document.querySelector('.sort-control select');
 	if (sortSelect) {
@@ -27,45 +45,61 @@ document.addEventListener('DOMContentLoaded', function() {
 		});
 	}
 
+	// Set active view mode button
+	function setActiveViewModeButton(viewMode) {
+		viewModeButtons.forEach(button => {
+			button.classList.remove('active');
+			if (button.dataset.viewMode === viewMode) {
+				button.classList.add('active');
+			}
+		});
+	}
+
 	// Update products display
 	function updateProductsDisplay(count) {
-		const grid = document.querySelector('.products-grid');
-		if (grid) {
-			grid.classList.add('loading');
+		const container = document.querySelector('.products-container');
+		if (container) {
+			container.classList.add('loading');
 			setActiveDisplayButton(count);
 			
-			// Trigger AJAX or reload with new count
+			// Update URL and reload
 			const url = new URL(window.location);
 			url.searchParams.set('products_per_page', count);
-			window.history.pushState({}, '', url);
+			window.location.href = url.toString();
+		}
+	}
+
+	// Update view mode
+	function updateViewMode(viewMode) {
+		const container = document.querySelector('.products-container');
+		if (container) {
+			container.classList.add('loading');
+			setActiveViewModeButton(viewMode);
 			
-			// You can add AJAX call here if needed
-			setTimeout(() => {
-				grid.classList.remove('loading');
-			}, 300);
+			// Update URL and reload
+			const url = new URL(window.location);
+			url.searchParams.set('view_mode', viewMode);
+			window.location.href = url.toString();
 		}
 	}
 
 	// Update products sort
 	function updateProductsSort(sortBy) {
-		const grid = document.querySelector('.products-grid');
-		if (grid) {
-			grid.classList.add('loading');
+		const container = document.querySelector('.products-container');
+		if (container) {
+			container.classList.add('loading');
 			
-			// Trigger AJAX or reload with new sort
+			// Update URL and reload
 			const url = new URL(window.location);
 			url.searchParams.set('sort_by', sortBy);
-			window.history.pushState({}, '', url);
-			
-			// You can add AJAX call here if needed
-			setTimeout(() => {
-				grid.classList.remove('loading');
-			}, 300);
+			window.location.href = url.toString();
 		}
 	}
 
 	// Initialize with stored values from URL
 	const params = new URLSearchParams(window.location.search);
 	const storedCount = parseInt(params.get('products_per_page')) || 12;
+	const storedViewMode = params.get('view_mode') || 'grid-4';
 	setActiveDisplayButton(storedCount);
+	setActiveViewModeButton(storedViewMode);
 });

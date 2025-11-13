@@ -1,0 +1,53 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "modern-fse/products-sidebar",
+	"version": "1.0.0",
+	"title": "Products Sidebar Filters",
+	"description": "Advanced product filtering sidebar with multiple filter options",
+	"category": "woocommerce",
+	"keywords": [ "products", "sidebar", "filter", "woocommerce" ],
+	"textdomain": "blocktheme",
+	"attributes": {
+		"showCategories": {
+			"type": "boolean",
+			"default": true
+		},
+		"showPriceRange": {
+			"type": "boolean",
+			"default": true
+		},
+		"showRating": {
+			"type": "boolean",
+			"default": true
+		},
+		"showOnSale": {
+			"type": "boolean",
+			"default": true
+		},
+		"showInStock": {
+			"type": "boolean",
+			"default": true
+		},
+		"showBrands": {
+			"type": "boolean",
+			"default": false
+		},
+		"priceMin": {
+			"type": "number",
+			"default": 0
+		},
+		"priceMax": {
+			"type": "number",
+			"default": 10000
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": ["wide", "full"]
+	},
+	"editorScript": "file:./editor.js",
+	"editorStyle": "file:./editor.css",
+	"script": "file:./view.js",
+	"style": "file:./style.css"
+}

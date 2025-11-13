@@ -1,0 +1,21 @@
+/* Products Sidebar Editor Styles */
+
+.wp-block-blocktheme-products-sidebar.is-editor-preview .sidebar-inner {
+	background: #fff;
+	border: 2px dashed #999;
+	border-radius: 8px;
+	padding: 1.5rem;
+}
+
+.wp-block-blocktheme-products-sidebar.is-editor-preview .filter-group.is-preview {
+	background: #f0f0f0;
+	border: 1px dashed #ccc;
+	border-radius: 4px;
+	padding: 2rem;
+	text-align: center;
+}
+
+.wp-block-blocktheme-products-sidebar.is-editor-preview .filter-group.is-preview p {
+	color: #999;
+	font-size: 14px;
+}
