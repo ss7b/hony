@@ -29,7 +29,6 @@ function modern_fse_register_all_blocks()
         'products-swiper',
         'products-tabs',
         'products-shop',
-        'products-sidebar'
     );
 
     foreach ($blocks as $block_name) {
@@ -68,10 +67,6 @@ function modern_fse_register_single_block($block_name)
     } elseif ($block_name === 'products-shop') {
         register_block_type($block_path . '/block.json', array(
             'render_callback' => 'modern_fse_render_products_shop',
-        ));
-    } elseif ($block_name === 'products-sidebar') {
-        register_block_type($block_path . '/block.json', array(
-            'render_callback' => 'modern_fse_render_products_sidebar',
         ));
     } else {
         register_block_type($block_path . '/block.json');
@@ -502,8 +497,7 @@ function modern_fse_enqueue_block_assets()
         'product-category-grid',
         'products-swiper',
         'products-tabs',
-        'products-shop',
-        'products-sidebar'
+        'products-shop'
     );
 
     foreach ($blocks as $block_name) {
@@ -566,8 +560,7 @@ function modern_fse_enqueue_block_editor_assets()
         'product-category-grid',
         'products-swiper',
         'products-tabs',
-        'products-shop',
-        'products-sidebar'
+        'products-shop'
     );
 
     foreach ($blocks as $block_name) {
@@ -668,12 +661,7 @@ function modern_fse_get_available_blocks()
             'icon' => 'store',
             'category' => 'woocommerce'
         ),
-        'products-sidebar' => array(
-            'name' => 'Products Sidebar Filters',
-            'description' => 'شريط جانبي متقدم لفلترة المنتجات',
-            'icon' => 'filter',
-            'category' => 'woocommerce'
-        )
+
     );
 }
 
@@ -793,152 +781,8 @@ function modern_fse_load_block_textdomain()
 }
 add_action('after_setup_theme', 'modern_fse_load_block_textdomain');
 
-/**
- * Render callback for Products Sidebar Block
- */
-function modern_fse_render_products_sidebar($attributes, $content)
-{
-    // التحقق من وجود ووكومرس
-    if (!class_exists('WooCommerce')) {
-        return '<div class="notice notice-warning"><p>' . __('يتطلب هذا البلوك إضافة WooCommerce', 'blocktheme') . '</p></div>';
-    }
 
-    // تحضير المسار والملف
-    $render_file = get_template_directory() . '/inc/blocks/products-sidebar/view.php';
-    
-    if (!file_exists($render_file)) {
-        return '<div class="notice notice-error"><p>' . __('ملف العرض غير موجود', 'blocktheme') . '</p></div>';
-    }
 
-    // تضمين ملف view.php
-    ob_start();
-    include $render_file;
-    return ob_get_clean();
-}
-
-/**
- * AJAX Handler for Products Filtering
- */
-function modern_fse_ajax_filter_products() {
-    // Verify nonce
-    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'products-filters-nonce')) {
-        wp_send_json_error(array('message' => __('Invalid security token', 'blocktheme')), 403);
-    }
-
-    // Check WooCommerce
-    if (!class_exists('WooCommerce')) {
-        wp_send_json_error(array('message' => __('WooCommerce is not installed', 'blocktheme')), 400);
-    }
-
-    // Get filter parameters
-    $categories = isset($_POST['categories']) ? (array) $_POST['categories'] : array();
-    $min_price = isset($_POST['min_price']) ? intval($_POST['min_price']) : 0;
-    $max_price = isset($_POST['max_price']) ? intval($_POST['max_price']) : 10000;
-    $min_rating = isset($_POST['min_rating']) ? intval($_POST['min_rating']) : 0;
-    $on_sale = isset($_POST['on_sale']) && $_POST['on_sale'] ? true : false;
-    $in_stock = isset($_POST['in_stock']) && $_POST['in_stock'] ? true : false;
-
-    // Build WP_Query arguments
-    $args = array(
-        'post_type' => 'product',
-        'posts_per_page' => -1,
-        'orderby' => 'date',
-        'order' => 'DESC',
-        'fields' => 'ids',
-    );
-
-    // Filter by categories if provided
-    if (!empty($categories)) {
-        $args['tax_query'] = array(
-            array(
-                'taxonomy' => 'product_cat',
-                'field' => 'slug',
-                'terms' => array_map('sanitize_text_field', $categories),
-                'operator' => 'IN',
-            ),
-        );
-    }
-
-    // Filter by meta queries (price, rating, stock, sale status)
-    $meta_query = array();
-
-    // Price range filter
-    if ($min_price > 0 || $max_price < 10000) {
-        $meta_query[] = array(
-            'key' => '_price',
-            'value' => array($min_price, $max_price),
-            'compare' => 'BETWEEN',
-            'type' => 'NUMERIC',
-        );
-    }
-
-    // On sale filter
-    if ($on_sale) {
-        $meta_query[] = array(
-            'key' => '_sale_price',
-            'compare' => 'EXISTS',
-        );
-    }
-
-    // In stock filter
-    if ($in_stock) {
-        $meta_query[] = array(
-            'key' => '_stock_status',
-            'value' => 'instock',
-            'compare' => '=',
-        );
-    }
-
-    if (!empty($meta_query)) {
-        $meta_query['relation'] = 'AND';
-        $args['meta_query'] = $meta_query;
-    }
-
-    // Execute query
-    $query = new WP_Query($args);
-    $product_ids = $query->posts;
-
-    // Filter by rating if necessary
-    $filtered_products = array();
-    if ($min_rating > 0) {
-        foreach ($product_ids as $product_id) {
-            $product = wc_get_product($product_id);
-            if ($product && $product->get_average_rating() >= $min_rating) {
-                $filtered_products[] = $product_id;
-            }
-        }
-    } else {
-        $filtered_products = $product_ids;
-    }
-
-    // Get product data
-    $products_data = array();
-    foreach ($filtered_products as $product_id) {
-        $product = wc_get_product($product_id);
-        if ($product) {
-            $image_id = $product->get_image_id();
-            $image_url = $image_id ? wp_get_attachment_url($image_id) : wc_placeholder_img_src();
-            
-            $products_data[] = array(
-                'id' => $product->get_id(),
-                'name' => $product->get_name(),
-                'price' => (float) $product->get_price(),
-                'regular_price' => (float) $product->get_regular_price(),
-                'sale_price' => (float) $product->get_sale_price(),
-                'image' => $image_url,
-                'permalink' => $product->get_permalink(),
-                'rating' => (float) $product->get_average_rating(),
-                'on_sale' => $product->is_on_sale(),
-                'in_stock' => $product->is_in_stock(),
-            );
-        }
-    }
-
-    wp_send_json_success(array(
-        'products' => $products_data,
-        'count' => count($filtered_products),
-    ));
-}
 
 add_action('wp_ajax_filter_products', 'modern_fse_ajax_filter_products');
 add_action('wp_ajax_nopriv_filter_products', 'modern_fse_ajax_filter_products');

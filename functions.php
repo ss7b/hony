@@ -179,6 +179,8 @@ add_action( 'after_setup_theme', 'modern_fse_theme_woocommerce_support' );
 
 require_once get_template_directory() . '/inc/patterns/init.php';
 
+// Load AJAX handlers
+require_once get_template_directory() . '/inc/blocks/products-shop/ajax-handler.php';
 
 function modern_fse_optimize_performance() {
     // إزالة CSS غير الضروري

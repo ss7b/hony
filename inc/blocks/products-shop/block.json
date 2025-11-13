@@ -24,6 +24,42 @@
         "viewMode": {
             "type": "string",
             "default": "grid"
+        },
+        "sidebarEnabled": {
+            "type": "boolean",
+            "default": true
+        },
+        "showPriceFilter": {
+            "type": "boolean",
+            "default": true
+        },
+        "showCategoryFilter": {
+            "type": "boolean",
+            "default": true
+        },
+        "showAttributeFilter": {
+            "type": "boolean",
+            "default": true
+        },
+        "showRatingFilter": {
+            "type": "boolean",
+            "default": true
+        },
+        "showBrandFilter": {
+            "type": "boolean",
+            "default": true
+        },
+        "showSizeFilter": {
+            "type": "boolean",
+            "default": true
+        },
+        "showTopRatedFilter": {
+            "type": "boolean",
+            "default": false
+        },
+        "enablePagination": {
+            "type": "boolean",
+            "default": true
         }
     },
     "supports": {

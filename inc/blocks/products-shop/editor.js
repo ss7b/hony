@@ -2,7 +2,7 @@
     const { registerBlockType } = wp.blocks;
     const { InspectorControls, useBlockProps } = wp.blockEditor;
     const el = wp.element.createElement;
-    const { PanelBody, RangeControl, SelectControl, ButtonGroup, Button } = wp.components;
+    const { PanelBody, RangeControl, SelectControl, ButtonGroup, Button, ToggleControl } = wp.components;
 
     registerBlockType( 'modern-fse/products-shop', {
         title: 'Products Shop',
@@ -12,7 +12,7 @@
         edit: function( props ) {
             const { attributes, setAttributes } = props;
             const blockProps = useBlockProps();
-            const { productsPerPage, sortBy, gridColumns, viewMode } = attributes;
+            const { productsPerPage, sortBy, gridColumns, viewMode, sidebarEnabled, showPriceFilter, showCategoryFilter, showAttributeFilter, showRatingFilter, showBrandFilter, showSizeFilter, showTopRatedFilter, enablePagination } = attributes;
 
             return el(
                 'div',
@@ -73,6 +73,77 @@
                             }
                         }, 'List' )
                     )
+                ),
+                el( PanelBody, { title: 'Sidebar Filters Settings' },
+                    el( ToggleControl, {
+                        label: 'Show Sidebar Filters',
+                        help: sidebarEnabled ? 'Sidebar filters are visible' : 'Sidebar filters are hidden',
+                        checked: sidebarEnabled,
+                        onChange: function( value ) {
+                            setAttributes( { sidebarEnabled: value } );
+                        }
+                    } ),
+                    sidebarEnabled && el( 'div', { className: 'sidebar-filters-options' },
+                        el( ToggleControl, {
+                            label: 'Show Price Filter',
+                            checked: showPriceFilter,
+                            onChange: function( value ) {
+                                setAttributes( { showPriceFilter: value } );
+                            }
+                        } ),
+                        el( ToggleControl, {
+                            label: 'Show Category Filter',
+                            checked: showCategoryFilter,
+                            onChange: function( value ) {
+                                setAttributes( { showCategoryFilter: value } );
+                            }
+                        } ),
+                        el( ToggleControl, {
+                            label: 'Show Attribute Filter',
+                            checked: showAttributeFilter,
+                            onChange: function( value ) {
+                                setAttributes( { showAttributeFilter: value } );
+                            }
+                        } ),
+                        el( ToggleControl, {
+                            label: 'Show Rating Filter',
+                            checked: showRatingFilter,
+                            onChange: function( value ) {
+                                setAttributes( { showRatingFilter: value } );
+                            }
+                        } ),
+                        el( ToggleControl, {
+                            label: 'Show Brand Filter',
+                            checked: showBrandFilter,
+                            onChange: function( value ) {
+                                setAttributes( { showBrandFilter: value } );
+                            }
+                        } ),
+                        el( ToggleControl, {
+                            label: 'Show Size Filter',
+                            checked: showSizeFilter,
+                            onChange: function( value ) {
+                                setAttributes( { showSizeFilter: value } );
+                            }
+                        } ),
+                        el( ToggleControl, {
+                            label: 'Show Top Rated Filter',
+                            checked: showTopRatedFilter,
+                            onChange: function( value ) {
+                                setAttributes( { showTopRatedFilter: value } );
+                            }
+                        } )
+                    )
+                ),
+                el( PanelBody, { title: 'Pagination Settings' },
+                    el( ToggleControl, {
+                        label: 'Enable Pagination',
+                        help: enablePagination ? 'Pagination is enabled' : 'Pagination is disabled',
+                        checked: enablePagination,
+                        onChange: function( value ) {
+                            setAttributes( { enablePagination: value } );
+                        }
+                    } )
                 ),
                 el( 'div', { className: 'wp-block-modern-fse-products-shop' },
                     el( 'div', { className: 'products-shop-header' },
