@@ -1,0 +1,36 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "modern-fse/products-shop",
+    "version": "1.0.0",
+    "title": "Products Shop",
+    "category": "woocommerce",
+    "description": "عرض المنتجات مع خيارات الفرز والعرض وقائمة التنقل",
+    "keywords": ["products", "shop", "woocommerce"],
+    "textdomain": "modern-fse-theme",
+    "attributes": {
+        "productsPerPage": {
+            "type": "number",
+            "default": 12
+        },
+        "sortBy": {
+            "type": "string",
+            "default": "date"
+        },
+        "gridColumns": {
+            "type": "number",
+            "default": 4
+        },
+        "viewMode": {
+            "type": "string",
+            "default": "grid"
+        }
+    },
+    "supports": {
+        "html": false,
+        "align": ["wide", "full"]
+    },
+    "editorScript": "file:./editor.js",
+    "script": "file:./view.js",
+    "style": "file:./style.css"
+}
