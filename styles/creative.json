@@ -88,8 +88,8 @@
                 "shadow": "0 10px 25px -5px rgba(0, 0, 0, 0.1)",
                 "spacing": {
                     "padding": {
-                        "top": "3rem",
-                        "bottom": "3rem",
+                        "top": "0px",
+                        "bottom": "0px",
                         "left": "2rem",
                         "right": "2rem"
                     }
@@ -123,8 +123,8 @@
                 },
                 "spacing": {
                     "padding": {
-                        "top": "1rem",
-                        "bottom": "1rem",
+                        "top": "0px",
+                        "bottom": "0px",
                         "left": "2rem",
                         "right": "2rem"
                     }

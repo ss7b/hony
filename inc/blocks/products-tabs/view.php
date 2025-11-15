@@ -21,14 +21,17 @@ if (!defined('ABSPATH')) {
  * }
  */
 
-function modern_fse_render_products_tabs($attributes, $content)
-{
+// تحديد الـ attributes بشكل مباشر - إذا تم استدعاء الدالة
+if (!isset($attributes)) {
+    $attributes = array();
+}
     ob_start();
 
     // التحقق من وجود ووكومرس
     if (!class_exists('WooCommerce')) {
         echo '<div class="notice notice-warning"><p>يتطلب هذا البلوك إضافة WooCommerce</p></div>';
-        return ob_get_clean();
+        echo ob_get_clean();
+        exit;
     }
 
     // الحصول على الخصائص بقيم افتراضية
@@ -51,8 +54,7 @@ function modern_fse_render_products_tabs($attributes, $content)
     // التحقق من وجود تبويبات
     if (empty($tabs) || !is_array($tabs)) {
         echo '<p class="no-tabs-found">لم يتم العثور على تبويبات</p>';
-        return ob_get_clean();
-    }
+    } else {
 
     // معرّف فريد للبلوك
     $block_id = 'products-tabs-' . uniqid();
@@ -237,6 +239,4 @@ function modern_fse_render_products_tabs($attributes, $content)
     </div>
 
     <?php
-
-    return ob_get_clean();
-}
+    }

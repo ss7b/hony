@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // تعريف ثوابت المسارات
-define( 'MODERN_FSE_THEME_VERSION', '1.0.1' );
+define( 'MODERN_FSE_THEME_VERSION', '1.0.2' );
 define( 'MODERN_FSE_THEME_PATH', get_template_directory() );
 define( 'MODERN_FSE_THEME_URL', get_template_directory_uri() );
 

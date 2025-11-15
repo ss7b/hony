@@ -483,6 +483,24 @@ function modern_fse_enqueue_block_frontend_assets($block_name, $block_path, $blo
 }
 
 /**
+ * Render callback for Products Tabs Block
+ */
+function modern_fse_render_products_tabs($attributes, $content)
+{
+    // استدعاء الملف الخاص بـ view.php
+    $view_file = get_template_directory() . '/inc/blocks/products-tabs/view.php';
+    
+    if (!file_exists($view_file)) {
+        return '<div class="notice notice-error"><p>ملف العرض غير موجود</p></div>';
+    }
+
+    // تخزين الـ attributes في متغير عام لاستخدامه في view.php
+    ob_start();
+    include $view_file;
+    return ob_get_clean();
+}
+
+/**
  * تحميل جميع نصوص البلوكات عند الحاجة
  */
 function modern_fse_enqueue_block_assets()
@@ -501,20 +519,14 @@ function modern_fse_enqueue_block_assets()
     );
 
     foreach ($blocks as $block_name) {
-        // تحميل JavaScript إذا كان مسجل
-        if (wp_script_is('modern-fse-' . $block_name . '-view', 'registered')) {
-            wp_enqueue_script('modern-fse-' . $block_name . '-view');
-        }
-
-        // تحميل CSS إذا كان مسجل
-        if (wp_style_is('modern-fse-' . $block_name . '-view', 'registered')) {
-            wp_enqueue_style('modern-fse-' . $block_name . '-view');
-        }
-
         // تحميل CSS الرئيسي للبلوك
-        if (wp_style_is('modern-fse-' . $block_name . '-style', 'registered')) {
-            wp_enqueue_style('modern-fse-' . $block_name . '-style');
-        }
+        wp_enqueue_style('modern-fse-' . $block_name . '-style');
+        
+        // تحميل JavaScript للواجهة الأمامية
+        wp_enqueue_script('modern-fse-' . $block_name . '-view');
+        
+        // تحميل CSS الإضافي للواجهة الأمامية
+        wp_enqueue_style('modern-fse-' . $block_name . '-view');
     }
 
     // تحميل Swiper إذا كان البلوك الجديد مستخدماً
@@ -544,6 +556,32 @@ function modern_fse_enqueue_block_assets()
     }
 }
 add_action('wp_enqueue_scripts', 'modern_fse_enqueue_block_assets');
+
+/**
+ * تحميل أنماط وبرامج products-tabs نصية على الصفحة الأمامية بشكل مباشر
+ */
+function modern_fse_enqueue_products_tabs_assets()
+{
+    $block_url = get_template_directory_uri() . '/inc/blocks/products-tabs';
+    
+    // تحميل CSS الرئيسي
+    wp_enqueue_style(
+        'products-tabs-style',
+        $block_url . '/style.css',
+        array(),
+        filemtime(get_template_directory() . '/inc/blocks/products-tabs/style.css')
+    );
+    
+    // تحميل JavaScript
+    wp_enqueue_script(
+        'products-tabs-view',
+        $block_url . '/view.js',
+        array(),
+        filemtime(get_template_directory() . '/inc/blocks/products-tabs/view.js'),
+        true
+    );
+}
+add_action('wp_enqueue_scripts', 'modern_fse_enqueue_products_tabs_assets');
 
 /**
  * تحميل نصوص المحرر للبلوكات

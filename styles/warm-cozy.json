@@ -92,8 +92,8 @@
                 },
                 "spacing": {
                     "padding": {
-                        "top": "3rem",
-                        "bottom": "3rem",
+                        "top": "0px",
+                        "bottom": "0px",
                         "left": "2rem",
                         "right": "2rem"
                     }
@@ -127,8 +127,8 @@
                 },
                 "spacing": {
                     "padding": {
-                        "top": "1rem",
-                        "bottom": "1rem",
+                        "top": "0px",
+                        "bottom": "0px",
                         "left": "2rem",
                         "right": "2rem"
                     }

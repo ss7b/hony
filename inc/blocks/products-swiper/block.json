@@ -2,7 +2,7 @@
     "$schema": "https://schemas.wp.org/trunk/block.json",
     "apiVersion": 3,
     "name": "modern-fse/products-swiper",
-    "version": "1.0.0",
+    "version": "1.0.3",
     "title": "Products Swiper",
     "category": "woocommerce",
     "description": "عرض المنتجات في Swiper مع خيارات متقدمة للفرز والتصميم",

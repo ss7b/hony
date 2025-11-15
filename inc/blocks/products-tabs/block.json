@@ -2,7 +2,7 @@
     "$schema": "https://schemas.wp.org/trunk/block.json",
     "apiVersion": 3,
     "name": "modern-fse/products-tabs",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "title": "Products Tabs",
     "category": "woocommerce",
     "description": "عرض المنتجات في تبويبات مع تأثيرات حركية جميلة وخيارات تخصيص شاملة",
