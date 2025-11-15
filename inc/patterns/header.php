@@ -23,6 +23,7 @@ function modern_fse_register_header_patterns() {
     modern_fse_register_header_premium();
     modern_fse_register_header_corporate();
     modern_fse_register_header_creative();
+    modern_fse_register_header_business();
 }
 
 // النمط الأول: Header Modern
@@ -351,6 +352,62 @@ function modern_fse_register_header_creative() {
         array(
             'title'       => __( 'Header Creative', 'modern-fse-theme' ),
             'description' => __( 'هيدر إبداعي مع خلفية فاتحة وتصميم عصري', 'modern-fse-theme' ),
+            'content'     => $content,
+            'categories'  => array( 'modern-fse-header' ),
+            'viewportWidth' => 1200,
+        )
+    );
+}
+
+// النمط الثامن: Header Business
+function modern_fse_register_header_business() {
+    $content = '<!-- wp:group {"metadata":{"categories":["modern-fse-header"],"patternName":"modern-fse/header-business","name":"Header Business"},"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|s","bottom":"var:preset|spacing|s"}}},"backgroundColor":"white","layout":{"type":"constrained"}} -->
+        <div class="wp-block-group alignfull has-white-background-color has-background" style="padding-top:var(--wp--preset--spacing--s);padding-bottom:var(--wp--preset--spacing--s)"><!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"0","bottom":"0"}},"border":{"width":"0px","style":"none","radius":"0px"}},"backgroundColor":"secondary-50","layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap"}} -->
+        <div class="wp-block-group alignfull has-secondary-50-background-color has-background" style="border-style:none;border-width:0px;border-radius:0px;padding-top:0;padding-bottom:0"><!-- wp:group {"style":{"spacing":{"padding":{"top":"0","bottom":"0","left":"0","right":"0"}}},"layout":{"type":"flex","flexWrap":"nowrap","alignItems":"center"}} -->
+        <div class="wp-block-group" style="padding-top:0;padding-right:0;padding-bottom:0;padding-left:0"><!-- wp:site-logo {"width":67} /-->
+
+        <!-- wp:social-links -->
+        <ul class="wp-block-social-links"><!-- wp:social-link {"url":"https://suhaildev.com/#contact","service":"whatsapp"} /-->
+
+        <!-- wp:social-link {"url":"ب","service":"instagram"} /-->
+
+        <!-- wp:social-link {"url":"س","service":"tiktok"} /-->
+
+        <!-- wp:social-link {"url":"ب","service":"youtube"} /--></ul>
+        <!-- /wp:social-links -->
+
+        <!-- wp:paragraph {"style":{"elements":{"link":{"color":{"text":"var:preset|color|secondary-600"}}},"color":"secondary-600","typography":{"fontSize":"0.875rem"}}} -->
+        <p class="has-link-color" style="font-size:0.875rem">📞0505454645254 |</p>
+        <!-- /wp:paragraph -->
+
+        <!-- wp:paragraph {"style":{"elements":{"link":{"color":{"text":"var:preset|color|secondary-600"}}},"color":"secondary-600","typography":{"fontSize":"0.875rem"}}} -->
+        <p class="has-link-color" style="font-size:0.875rem">✉ mail@gmail.com</p>
+        <!-- /wp:paragraph --></div>
+        <!-- /wp:group -->
+
+        <!-- wp:buttons -->
+        <div class="wp-block-buttons"><!-- wp:button {"backgroundColor":"primary-600","textColor":"white","width":100,"className":"is-style-fill","style":{"spacing":{"padding":{"left":"var:preset|spacing|s","right":"var:preset|spacing|s","top":"var:preset|spacing|xs","bottom":"var:preset|spacing|xs"}}}} -->
+        <div class="wp-block-button has-custom-width wp-block-button__width-100 is-style-fill"><a class="wp-block-button__link has-white-color has-primary-600-background-color has-text-color has-background wp-element-button" style="padding-top:var(--wp--preset--spacing--xs);padding-right:var(--wp--preset--spacing--s);padding-bottom:var(--wp--preset--spacing--xs);padding-left:var(--wp--preset--spacing--s)">Request a Quote</a></div>
+        <!-- /wp:button --></div>
+        <!-- /wp:buttons --></div>
+        <!-- /wp:group -->
+
+        <!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"0","bottom":"0"},"margin":{"top":"0","bottom":"0"}},"border":{"width":"0px","style":"none","radius":"0px"}},"textColor":"white","layout":{"type":"flex","justifyContent":"space-between","flexWrap":"nowrap","alignItems":"center"}} -->
+        <div class="wp-block-group alignfull has-white-color has-text-color" style="border-style:none;border-width:0px;border-radius:0px;margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0"><!-- wp:navigation {"textColor":"white","className":"has-white-color","fontSize":"medium","layout":{"type":"flex","justifyContent":"left","orientation":"horizontal"}} -->
+        <!-- wp:page-list /-->
+        <!-- /wp:navigation -->
+
+        <!-- wp:group {"style":{"color":{"background":"#ffffff00"},"spacing":{"padding":{"top":"0","bottom":"0","left":"0","right":"0"}}},"layout":{"type":"flex","justifyContent":"right"}} -->
+        <div class="wp-block-group has-background" style="background-color:#ffffff00;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0"><!-- wp:search {"label":"","buttonText":"Search"} /--></div>
+        <!-- /wp:group --></div>
+        <!-- /wp:group --></div>
+        <!-- /wp:group -->';
+
+    register_block_pattern(
+        'modern-fse/header-business',
+        array(
+            'title'       => __( 'Header Business', 'modern-fse-theme' ),
+            'description' => __( 'هيدر احترافي للشركات مع معلومات التواصل والشبكات الاجتماعية', 'modern-fse-theme' ),
             'content'     => $content,
             'categories'  => array( 'modern-fse-header' ),
             'viewportWidth' => 1200,

@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // تعريف ثوابت المسارات
-define( 'MODERN_FSE_THEME_VERSION', '1.0.2' );
+define( 'MODERN_FSE_THEME_VERSION', '1.0.5' );
 define( 'MODERN_FSE_THEME_PATH', get_template_directory() );
 define( 'MODERN_FSE_THEME_URL', get_template_directory_uri() );
 
@@ -152,6 +152,14 @@ function modern_fse_theme_scripts() {
 		MODERN_FSE_THEME_VERSION
 	);
 	
+	// Hero Slider Animation CSS
+	wp_enqueue_style(
+		'modern-fse-hero-slider-animation',
+		MODERN_FSE_THEME_URL . '/assets/css/hero-slider-animation.css',
+		array(),
+		MODERN_FSE_THEME_VERSION
+	);
+	
 	// النصوص الرئيسية
 	wp_enqueue_script(
 		'modern-fse-theme-script',
@@ -162,7 +170,16 @@ function modern_fse_theme_scripts() {
 	);
 	 // swiper
     wp_enqueue_style('swiper', 'https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css', array(), '12.0.0');
-	wp_enqueue_script('swiper', 'https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js', array(), '12.0.0', true);   
+	wp_enqueue_script('swiper', 'https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js', array(), '12.0.0', true);
+	
+	// Hero Slider Animation JavaScript
+	wp_enqueue_script(
+		'modern-fse-hero-slider',
+		MODERN_FSE_THEME_URL . '/assets/js/hero-slider.js',
+		array(),
+		MODERN_FSE_THEME_VERSION,
+		true
+	);
 }
 add_action( 'wp_enqueue_scripts', 'modern_fse_theme_scripts' );
 
